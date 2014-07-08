@@ -101,9 +101,9 @@ public class Client{
 					String success = null;
 					try {
 						while(clientSocket == null){}
-						Log.d("Socket ","create successfully");
+							Log.d("Socket ","create successfully");
 						BufferedReader inputs =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-						Log.d("Client 10101020" , "od");
+							Log.d("Client 10101020" , "od");
 						success = inputs.readLine();
 							Log.d("Client 10101020" , success);
 						if(success.equals("F")) {

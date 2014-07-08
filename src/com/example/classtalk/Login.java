@@ -193,7 +193,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		model = new Model();
 		model.addObserver(this);
 		model.initObservers();
-		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",28047, model, this);
+		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",44643, model, this);
 	}
 	
 	public void addBuildingRooms(int building,String room){
