@@ -88,7 +88,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Start(arg0,"SIGN_IN");
+				
 			}
 		});
 		
@@ -102,7 +102,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Start(arg0,"SIGN_UP");
+			
 			}
 		});
 		
@@ -206,11 +206,10 @@ public class Login extends Activity implements Observer, OnClickListener {
 		else;
 	}
 	
-	public void Start(View v, String sign_log) {
+	public void Start(View v) {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra("PersonName" , personName);
-		intent.putExtra("sign_log" , sign_log);
 		intent.putExtra("passwrod", user_password);
 		intent.putExtra("mcrooms" , MCrooms);
 		intent.putExtra("dcrooms" , DCrooms);
@@ -220,13 +219,14 @@ public class Login extends Activity implements Observer, OnClickListener {
 	
 	public void feedback (String feedback) {
 		if(feedback.equals("F")) {
-			
+			login_name.setText("");
+			login_password.setText("");
 		}
 		else if(feedback.equals("N")) {
-			
+			finish();
 		}
 		else if(feedback.equals("S")) {
-			
+			Start(this.view);
 		}
 	}
 		
@@ -255,7 +255,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						Start(view,"FACEBOOK");
+						//Start(view,"FACEBOOK");
 					}
 		        }).executeAsync();
 			}
