@@ -5,8 +5,23 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -23,7 +38,7 @@ import android.util.Log;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-public class MainActivity extends Activity implements Observer {
+public class MainActivity extends Activity implements Observer, LocationListener  {
 	
 	Spinner BuildingSpinner;
 	Spinner RoomSpinner;
@@ -38,7 +53,7 @@ public class MainActivity extends Activity implements Observer {
 	ArrayAdapter<String> adapter, adapter1, adapter2;
 	String personName;
 	Client client;
-	//GoogleMap map;
+	GoogleMap map;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +63,12 @@ public class MainActivity extends Activity implements Observer {
 		setContentView(R.layout.activity_main);
 		RelativeLayout rl = (RelativeLayout) findViewById(R.id.MainActivity);
 		rl.setBackgroundResource(R.drawable.dc);
-		client = new Client("ubuntu1204-004.student.cs.uwaterloo.ca",33787,this);
+		//client = new Client("ubuntu1204-004.student.cs.uwaterloo.ca",33787,this);
 		
 		BuildingSpinner = (Spinner) findViewById(R.id.Building_Spinner);
 		RoomSpinner = (Spinner) findViewById(R.id.Room_Spinner);
 		EnterButt = (Button) findViewById(R.id.Enter_Button);
-		try {
-			while(client.doneconnecttobinder(client));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		//adapters for spinnners
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,buildings);
 		BuildingSpinner.setAdapter(adapter);
@@ -72,6 +82,32 @@ public class MainActivity extends Activity implements Observer {
 				Start(arg0);
 			}
 		});
+		
+		// google map setup
+        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+        if(status!=ConnectionResult.SUCCESS){ // Google Play Services are not available
+ 
+            int requestCode = 10;
+            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
+            dialog.show();
+ 
+        }else { 
+            MapFragment fm = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+            map = fm.getMap();
+            map.setMyLocationEnabled(true);
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            Location location = locationManager.getLastKnownLocation(provider);
+            if(location!=null){
+                onLocationChanged(location);
+            }
+            locationManager.requestLocationUpdates(provider, 20000, 0, this);
+            map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            LatLng newLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+    		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(newLatLng, 16);
+    		map.animateCamera(update);
+        }
 		
 //		BuildingSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 //			RelativeLayout rl = (RelativeLayout) findViewById(R.id.MainActivity);
@@ -115,16 +151,6 @@ public class MainActivity extends Activity implements Observer {
 		model.initObservers();
 	}
 	
-	public void addBuildingRooms(int building,String room){
-		if(building == 1){
-			MCrooms.add(room);
-		}
-		else if(building == 2){
-			DCrooms.add(room);
-		}
-		else;
-	}
-	
 	public void Start(View v) {
 		Intent intent = new Intent(this, Talk.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -148,6 +174,8 @@ public class MainActivity extends Activity implements Observer {
 		if(extras != null) {
 			//do things on resume mode
 			personName = extras.getString("PersonName");
+			MCrooms = extras.getStringArrayList("MCrooms");
+			DCrooms = extras.getStringArrayList("DCrooms");
 			Log.d("chaochen","not null");
 		}
 	}
@@ -174,6 +202,30 @@ public class MainActivity extends Activity implements Observer {
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
 		
 	}

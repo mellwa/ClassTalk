@@ -26,13 +26,15 @@ public class Client{
 	  Model model;
 	  Talk talk;
 	  String personName;
-	  MainActivity main;
+	  Login login;
 	  boolean done = false;
+	  String password;
 	  
-	  Client(String addr, int port, MainActivity main){
+	  Client(String addr, int port, Model m,  Login login){
 		  dstAddress = addr;
 		  dstPort = port;
-		  this.main = main;
+		  this.login = login;
+		  model = m;
 		  done = false;
 		   new Thread(new ConnectToBinder()).start();
 	  }
@@ -53,8 +55,8 @@ public class Client{
 				if(out == null)
 				out  = new PrintWriter(clientSocket.getOutputStream(), true);
 				Log.d("done the socket create","start to write to binder");
-				out.write("cc");//tell binder this is a client
-				out.write(1);//tell binder this is a client
+				//out.write("cc");//tell binder this is a client
+				//out.write(1);//tell binder this is a client
 
 				out.flush();
 			} catch (UnknownHostException e) {
@@ -82,8 +84,8 @@ public class Client{
 					}
 					building = input.read();
 					room = input.readLine();
-					Log.d("from binder",room);
-					main.addBuildingRooms(building, room);
+					//Log.d("from binder",room);
+					//login.addBuildingRooms(building, room);
 					//while(clientSocket == null){}
 					//input2 =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 					//message = input.readLine();
@@ -93,14 +95,65 @@ public class Client{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			
 			}
 		}
 	  }
 	  
-	  boolean doneconnecttobinder(Client client) throws IOException{
+	  boolean doneconnecttobinder(Client client , String sign_log) throws IOException{
+		  personName = model.getName();
+		  password = model.getPassword();
 		  DataOutputStream out_stream = new DataOutputStream(client.clientSocket.getOutputStream());
+		  
+		  
 		  out_stream.writeInt(1);
-		  return done;
+		  out_stream.writeBytes(sign_log);
+		  
+		  Log.d("Client105105105" , sign_log);
+		  Log.d("Client105105105" , "person name is " + personName);
+		  Log.d("Client105105105" , "password is " + password);
+		  Log.d("Client105105105" , "name length is " + personName.length());
+		  Log.d("Client105105105" , "password length is " + password.length());
+		  
+		  int length = personName.length();
+		  out_stream.writeInt(length);
+		  out_stream.writeBytes(personName);
+		  out_stream.writeInt(password.length());
+		  out_stream.writeBytes(password);
+		  
+		  while(true){
+				int num;
+				int building;
+				String success = null;
+				try {
+					while(clientSocket == null){}
+					Log.d("Socket ","create successfully");
+					input =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+//					building = input.read();
+					success = input.readLine();
+					if(success.equals("F")) {
+						login.feedback("F");
+					}
+					else if(success.equals("N")) {
+						login.feedback("F");
+					}
+					else if(success.equals("S")) {
+						login.feedback("F");
+					}
+					//Log.d("from binder",room);
+					//login.addBuildingRooms(building, room);
+					//while(clientSocket == null){}
+					//input2 =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+					//message = input.readLine();
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			}
+		  
 	  }
 	  
 	  class ConnectToServer implements Runnable{

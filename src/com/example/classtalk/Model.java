@@ -27,7 +27,7 @@ public class Model extends Observable{
 		return user_password;
 	}
 	
-	public void setPasswrod(String password) {
+	public void setPassword(String password) {
 		user_password = password;
 	}
 	

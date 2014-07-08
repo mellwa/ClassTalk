@@ -1,5 +1,7 @@
 package com.example.classtalk;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -47,6 +49,10 @@ public class Login extends Activity implements Observer, OnClickListener {
 	EditText signup_password;
 	EditText login_password;
 	String user_password = "null";
+	Button SignUpButt;
+	ArrayList<String> DCrooms;
+	ArrayList<String> MCrooms;
+	Client client;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		login_password = (EditText)findViewById(R.id.login_password);
 		signup_name = (EditText)findViewById(R.id.signup_name);
 		signup_password = (EditText)findViewById(R.id.signup_password);
+		SignUpButt = (Button)findViewById(R.id.signup);
 		
 		id = "855558154473328";
 		fb = new Facebook(id);
@@ -75,7 +82,27 @@ public class Login extends Activity implements Observer, OnClickListener {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Start(arg0);
+				try {
+					client.doneconnecttobinder(client, "SIGN_INN");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Start(arg0,"SIGN_IN");
+			}
+		});
+		
+		SignUpButt.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				try {
+					client.doneconnecttobinder(client, "SIGN_UPP");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Start(arg0,"SIGN_UP");
 			}
 		});
 		
@@ -96,6 +123,7 @@ public class Login extends Activity implements Observer, OnClickListener {
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
                 personName = login_name.getText().toString();
+                model.setName(personName);
             }
         });
 		
@@ -116,6 +144,7 @@ public class Login extends Activity implements Observer, OnClickListener {
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
             	user_password = login_password.getText().toString();
+            	model.setPassword(user_password);
             }
         });
 		
@@ -136,6 +165,7 @@ public class Login extends Activity implements Observer, OnClickListener {
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
             	personName = login_password.getText().toString();
+            	model.setName(personName);
             }
         });
 		
@@ -156,20 +186,49 @@ public class Login extends Activity implements Observer, OnClickListener {
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
             	user_password = signup_password.getText().toString();
+            	model.setPassword(user_password);
             }
         });
 		
 		model = new Model();
 		model.addObserver(this);
 		model.initObservers();
+		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",32779, model, this);
 	}
 	
-		public void Start(View v) {
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra("PersonName" , personName);
-			startActivity(intent);
-		}	
+	public void addBuildingRooms(int building,String room){
+		if(building == 1){
+			MCrooms.add(room);
+		}
+		else if(building == 2){
+			DCrooms.add(room);
+		}
+		else;
+	}
+	
+	public void Start(View v, String sign_log) {
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.putExtra("PersonName" , personName);
+		intent.putExtra("sign_log" , sign_log);
+		intent.putExtra("passwrod", user_password);
+		intent.putExtra("mcrooms" , MCrooms);
+		intent.putExtra("dcrooms" , DCrooms);
+		
+		startActivity(intent);
+	}	
+	
+	public void feedback (String feedback) {
+		if(feedback.equals("F")) {
+			
+		}
+		else if(feedback.equals("N")) {
+			
+		}
+		else if(feedback.equals("S")) {
+			
+		}
+	}
 		
 	@Override
 	public void update(Observable observable, Object data) {
@@ -190,7 +249,13 @@ public class Login extends Activity implements Observer, OnClickListener {
 						personName = user.getName();
 						getname = true;
 						Log.d("user name",personName);
-						Start(view);
+						try {
+							client.doneconnecttobinder(client, "FACEBOOK");
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						Start(view,"FACEBOOK");
 					}
 		        }).executeAsync();
 			}
