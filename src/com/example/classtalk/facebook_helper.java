@@ -11,6 +11,7 @@ import com.facebook.Session.StatusCallback;
 import com.facebook.android.Facebook;
 import com.facebook.model.GraphUser;
 
+//facebook helper class
 public class facebook_helper {
 	static Facebook fb;
 	static Session activeSession;
