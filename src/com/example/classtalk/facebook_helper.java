@@ -13,6 +13,7 @@ import com.facebook.model.GraphUser;
 
 //facebook helper class
 //welcome to github xiao han
+//let's get started
 public class facebook_helper {
 	static Facebook fb;
 	static Session activeSession;
