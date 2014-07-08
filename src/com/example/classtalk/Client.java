@@ -69,34 +69,60 @@ public class Client{
 
 			}
 
-			while(true){
-				int num;
-				int building;
-				String room = null;
-				try {
-					while(clientSocket == null){}
-					Log.d("Socket ","create successfully");
-					input =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-					num = input.read();
-					if(num == 1){
-						done = true;
-						break;
+//			while(true){
+//				int num;
+//				int building;
+//				String room = null;
+//				try {
+//					while(clientSocket == null){}
+//					Log.d("Socket ","create successfully");
+//					input =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//					num = input.read();
+//					if(num == 1){
+//						done = true;
+//						break;
+//					}
+//					building = input.read();
+//					room = input.readLine();
+//					//Log.d("from binder",room);
+//					//login.addBuildingRooms(building, room);
+//					//while(clientSocket == null){}
+//					//input2 =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//					//message = input.readLine();
+//					Log.d("from server ",room + " " + building);
+//					
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			
+//			}
+			  while(true){
+					String success = null;
+					try {
+						while(clientSocket == null){}
+						Log.d("Socket ","create successfully");
+						BufferedReader inputs =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+						Log.d("Client 10101020" , "od");
+						success = inputs.readLine();
+							Log.d("Client 10101020" , success);
+						if(success.equals("F")) {
+							Log.d("Client101001", "faileuresrlssf dsala!");
+							login.feedback("F");
+						}
+						else if(success.equals("N")) {
+							login.feedback("N");
+						}
+						else if(success.equals("S")) {
+							login.feedback("S");
+						}
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					building = input.read();
-					room = input.readLine();
-					//Log.d("from binder",room);
-					//login.addBuildingRooms(building, room);
-					//while(clientSocket == null){}
-					//input2 =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-					//message = input.readLine();
-					Log.d("from server ",room + " " + building);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
 				}
-			
-			}
 		}
 	  }
 	  
@@ -120,39 +146,9 @@ public class Client{
 		  out_stream.writeBytes(personName);
 		  out_stream.writeInt(password.length());
 		  out_stream.writeBytes(password);
-		  
-		  while(true){
-				int num;
-				int building;
-				String success = null;
-				try {
-					while(clientSocket == null){}
-					Log.d("Socket ","create successfully");
-					input =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-//					building = input.read();
-					success = input.readLine();
-					if(success.equals("F")) {
-						login.feedback("F");
-					}
-					else if(success.equals("N")) {
-						login.feedback("F");
-					}
-					else if(success.equals("S")) {
-						login.feedback("F");
-					}
-					//Log.d("from binder",room);
-					//login.addBuildingRooms(building, room);
-					//while(clientSocket == null){}
-					//input2 =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-					//message = input.readLine();
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-			}
+		  new Thread(new ConnectToBinder()).start();
+		return done;
+		
 		  
 	  }
 	  
