@@ -38,7 +38,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 	String personName="null";
 	boolean getname = false;
 	ImageView fb_login_button;
-	Facebook fb;
+	facebook_helper fb_helper;
 	Session activeSession;
 	String id;
 	DialogListener dialoglistener;
@@ -71,7 +71,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		SignUpButt = (Button)findViewById(R.id.signup);
 		
 		id = "855558154473328";
-		fb = new Facebook(id);
+		fb_helper = new facebook_helper(id);
 		
 		fb_login_button = (ImageView) findViewById(R.id.facebook_login_button);
 		
