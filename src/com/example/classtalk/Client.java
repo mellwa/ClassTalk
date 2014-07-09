@@ -118,9 +118,20 @@ public class Client{
 						}
 						else if(success.equals("S")) {
 							login.feedback("S");
+						}
+						else if(success.equals("1")) {
+							done = true;
 							break;
 						}
-						
+						else if(success.equals("0")) {
+							int building;
+							String room = null;
+							building = input.read();
+							room = input.readLine();
+							Log.d("from binder",room);
+							login.addBuildingRooms(building, room);
+							Log.d("from server ",room + " " + building);
+						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

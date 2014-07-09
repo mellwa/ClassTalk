@@ -87,7 +87,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				try {
-					client.doneconnecttobinder(client, "SIGN_INN");
+					while(client.doneconnecttobinder(client, "SIGN_INN"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -101,7 +101,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				try {
-					client.doneconnecttobinder(client, "SIGN_UPP");
+					while(client.doneconnecttobinder(client, "SIGN_UPP"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -266,7 +266,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 						getname = true;
 						Log.d("user name",personName);
 						try {
-							client.doneconnecttobinder(client, "FACEBOOK");
+							while(client.doneconnecttobinder(client, "FACEBOOK"));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
