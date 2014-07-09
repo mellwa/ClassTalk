@@ -10,6 +10,7 @@ public class Model extends Observable{
 	String Room;
 	String personName;
 	String user_password;
+	String real_name;
 	
 	StringBuffer buffer = new StringBuffer();
 	
@@ -21,6 +22,14 @@ public class Model extends Observable{
 	
 	public void setName(String name) {
 		personName = name;
+	}
+	
+	public String get_real_name(){
+		return real_name;
+	}
+	
+	public void set_real_name(String name) {
+		real_name = name;
 	}
 	
 	public String getPassword() {

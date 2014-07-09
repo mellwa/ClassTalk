@@ -46,13 +46,16 @@ public class Login extends Activity implements Observer, OnClickListener {
 	View view;
 	
 	EditText signup_name;
+	EditText real_name;
 	EditText signup_password;
 	EditText login_password;
 	String user_password = "null";
+	String personName_real =  "null";
 	Button SignUpButt;
 	ArrayList<String> DCrooms;
 	ArrayList<String> MCrooms;
 	Client client;
+	String feedback1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		signup_name = (EditText)findViewById(R.id.signup_name);
 		signup_password = (EditText)findViewById(R.id.signup_password);
 		SignUpButt = (Button)findViewById(R.id.signup);
+//		real_name = (EditText)findViewById(R.id.real_name);
 		
 		id = "855558154473328";
 		fb_helper = new facebook_helper(id);
@@ -148,6 +152,7 @@ public class Login extends Activity implements Observer, OnClickListener {
             }
         });
 		
+		
 		signup_name.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -164,7 +169,7 @@ public class Login extends Activity implements Observer, OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-            	personName = login_password.getText().toString();
+            	personName = signup_name.getText().toString();
             	model.setName(personName);
             }
         });
@@ -193,7 +198,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		model = new Model();
 		model.addObserver(this);
 		model.initObservers();
-		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",44643, model, this);
+		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",24299, model, this);
 	}
 	
 	public void addBuildingRooms(int building,String room){
@@ -206,7 +211,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		else;
 	}
 	
-	public void Start(View v) {
+	public void Start() {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra("PersonName" , personName);
@@ -218,16 +223,27 @@ public class Login extends Activity implements Observer, OnClickListener {
 	}	
 	
 	public void feedback (String feedback) {
-		if(feedback.equals("F")) {
-			login_name.setText("");
-			login_password.setText("");
-		}
-		else if(feedback.equals("N")) {
-			finish();
-		}
-		else if(feedback.equals("S")) {
-			Start(this.view);
-		}
+		feedback1 = feedback;
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if(feedback1.equals("F")) {
+					Log.d("Client101001", "faileuresrlssf dsala!");
+					login_name.setText("");
+					login_password.setText("");
+				}
+				else if(feedback1.equals("N")) {
+					Log.d("Client101001", " yea yea no server la");
+					finish();
+				}
+				else if(feedback1.equals("S")) {
+					Log.d("Client101001", "s  sss s tttt araa r rrr t");
+					Start();
+				}
+			}
+		});
+		
 	}
 		
 	@Override

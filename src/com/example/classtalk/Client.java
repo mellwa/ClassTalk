@@ -109,12 +109,16 @@ public class Client{
 						if(success.equals("F")) {
 							Log.d("Client101001", "faileuresrlssf dsala!");
 							login.feedback("F");
+							Log.d("Client101001", "faileuresrlssf dsala!");
+							break;
 						}
 						else if(success.equals("N")) {
 							login.feedback("N");
+							break;
 						}
 						else if(success.equals("S")) {
 							login.feedback("S");
+							break;
 						}
 						
 					} catch (IOException e) {
