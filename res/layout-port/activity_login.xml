@@ -16,10 +16,12 @@
     <EditText
         android:id="@+id/editText1"
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_above="@+id/button1"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="72dp"
+        android:shadowColor="@android:color/white"
+        android:shadowRadius="0.1"
         android:ems="10" >
 
         <requestFocus />
@@ -38,7 +40,7 @@
     <EditText
         android:id="@+id/login_password"
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_above="@+id/button1"
         android:layout_alignLeft="@+id/editText1"
         android:layout_alignParentRight="true"
@@ -57,7 +59,7 @@
     <EditText
         android:id="@+id/signup_password"
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignBaseline="@+id/login_password"
         android:layout_alignBottom="@+id/login_password"
         android:layout_alignParentLeft="true"
@@ -67,7 +69,7 @@
     <EditText
         android:id="@+id/signup_name"
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignBaseline="@+id/editText1"
         android:layout_alignBottom="@+id/editText1"
         android:layout_alignParentLeft="true"

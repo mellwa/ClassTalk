@@ -11,8 +11,10 @@ import com.facebook.android.*;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.model.*;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +32,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class Login extends Activity implements Observer, OnClickListener {
 
 	Button LoginButt;
@@ -68,9 +71,13 @@ public class Login extends Activity implements Observer, OnClickListener {
 
 		LoginButt = (Button)findViewById(R.id.button1);
 		login_name = (EditText)findViewById(R.id.editText1);
+		login_name.setBackground(getResources().getDrawable(R.drawable.login_rec));
 		login_password = (EditText)findViewById(R.id.login_password);
+		login_password.setBackground(getResources().getDrawable(R.drawable.login_rec));
 		signup_name = (EditText)findViewById(R.id.signup_name);
+		signup_name.setBackground(getResources().getDrawable(R.drawable.login_rec));
 		signup_password = (EditText)findViewById(R.id.signup_password);
+		signup_password.setBackground(getResources().getDrawable(R.drawable.login_rec));
 		SignUpButt = (Button)findViewById(R.id.signup);
 //		real_name = (EditText)findViewById(R.id.real_name);
 		
@@ -114,7 +121,6 @@ public class Login extends Activity implements Observer, OnClickListener {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // TODO Auto-generated method stub              
             }
 
             @Override
@@ -256,42 +262,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		view = arg0;
-		if(activeSession != null && activeSession.isOpened()){
-			if(!getname){
-				Request.newMeRequest(activeSession, new Request.GraphUserCallback(){
-					@Override
-					public void onCompleted(GraphUser user, Response response) {
-						// TODO Auto-generated method stub
-						personName = user.getName();
-						getname = true;
-						Log.d("user name",personName);
-						try {
-							while(client.doneconnecttobinder(client, "FACEBOOK"));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						//Start(view,"FACEBOOK");
-					}
-		        }).executeAsync();
-			}
-		}
-		else{
-			activeSession = Session.getActiveSession();
-	        if (activeSession == null || activeSession.getState().isClosed()) {
-	            activeSession = new Session.Builder(this).setApplicationId(id).build();
-	            Session.setActiveSession(activeSession);
-	        }
-	        StatusCallback callback = new StatusCallback() {
-	            public void call(Session session, SessionState state, Exception exception) {
-	                if (exception != null) {
-	                    System.exit(-1);
-	                }
-	            }
-	        };
-	        activeSession.openForRead(new Session.OpenRequest(this).setCallback(callback));
-		}
+		fb_helper.facebook_login(arg0, this);
 	}
 	  @Override
 	  public void onActivityResult(int requestCode, int resultCode, Intent data) {
