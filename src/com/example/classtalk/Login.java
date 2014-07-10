@@ -198,7 +198,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		model = new Model();
 		model.addObserver(this);
 		model.initObservers();
-		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",24299, model, this);
+		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",1027, model, this);
 	}
 	
 	public void addBuildingRooms(int building,String room){
@@ -239,6 +239,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 				}
 				else if(feedback1.equals("S")) {
 					Log.d("Client101001", "s  sss s tttt araa r rrr t");
+//					client.doneconnecttobinder(client, "SIGN_INN")
 					Start();
 				}
 			}

@@ -103,6 +103,7 @@ public class Client{
 						while(clientSocket == null){}
 							Log.d("Socket ","create successfully");
 						BufferedReader inputs =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+						//BufferedReader inputt =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 							Log.d("Client 10101020" , "od");
 						success = inputs.readLine();
 							Log.d("Client 10101020" , success);
@@ -117,21 +118,84 @@ public class Client{
 							break;
 						}
 						else if(success.equals("S")) {
-							login.feedback("S");
-						}
-						else if(success.equals("1")) {
-							done = true;
-							break;
-						}
-						else if(success.equals("0")) {
+							Log.d("Client1010dfd01", "successs lalallalalala");
 							int building;
+							char[] buildings = new char[4];
+							String emptystring = null;
+							String room1 = null;
+							String room2 = null;
+							String room3 = null;
+							String room4 = null;
 							String room = null;
-							building = input.read();
-							room = input.readLine();
-							Log.d("from binder",room);
-							login.addBuildingRooms(building, room);
-							Log.d("from server ",room + " " + building);
+							
+							success = inputs.readLine();
+							Log.d("Client1010dfd01", " read llllaaa  " +  success);
+
+							if(success.equals("1")) {
+								done = true;
+								login.feedback("S");
+								break;
+							}
+							else if(success.equals("0")) {
+								Log.d("Client1010dfd01", " si ge");
+								//input =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+								inputs.read(buildings, 0, 4);
+								int bu = Integer.parseInt(buildings.toString());
+								
+								Log.d("from binder ","building is " + bu + " " + buildings.toString()) ;
+//								building = Integer.parseInt(buildings);
+								
+//								Log.d("Client1010dfd01", "Building " + building);
+								
+//								emptystring = inputs.readLine();
+								room1 = inputs.readLine();
+								Log.d("from binder ",room1);
+								room2 = inputs.readLine();
+								Log.d("from binder ",room2);
+								room3 = inputs.readLine();
+								Log.d("from binder ",room3);
+								room4 = inputs.readLine();
+								Log.d("from binder ",room4);
+								
+								room = room1 + room2 + room3 + room4;
+								Log.d("from binder ",room + " " + buildings);
+								
+//								login.addBuildingRooms(buildings, room);
+							}
+							
 						}
+//						else if(success.equals("1")) {
+//							done = true;
+//							login.feedback("S");
+//							break;
+//						}
+//						else if(success.equals("0")) {
+//							int building;
+//							String room1 = null;
+//							String room2 = null;
+//							String room3 = null;
+//							String room4 = null;
+//							String room = null;
+//							
+//							Log.d("Client1010dfd01", " si ge");
+//							building = inputs.read();
+//							Log.d("from binder", "Building " + building);
+//							
+////							emptystring = inputs.readLine();
+//							room1 = inputs.readLine();
+//							Log.d("from binder ",room1);
+//							room2 = inputs.readLine();
+//							Log.d("from binder ",room2);
+//							room3 = inputs.readLine();
+//							Log.d("from binder ",room3);
+//							room4 = inputs.readLine();
+//							Log.d("from binder ",room4);
+//							
+//							room = room1 + room2 + room3 + room4;
+//							Log.d("from binder ",room + " " + building);
+//							
+//							login.addBuildingRooms(building, room);
+//						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
