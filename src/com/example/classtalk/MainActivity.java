@@ -176,7 +176,6 @@ public class MainActivity extends Activity implements Observer, LocationListener
 			personName = extras.getString("PersonName");
 			MCrooms = extras.getStringArrayList("MCrooms");
 			DCrooms = extras.getStringArrayList("DCrooms");
-			Log.d("chaochen","not null");
 		}
 	}
 	

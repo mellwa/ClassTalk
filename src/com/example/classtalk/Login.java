@@ -97,6 +97,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 					while(client.doneconnecttobinder(client, "SIGN_INN"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
+					Log.d("connect to binder","ERROR");
 					e.printStackTrace();
 				}
 				
@@ -111,6 +112,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 					while(client.doneconnecttobinder(client, "SIGN_UPP"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
+					Log.d("User sign up","ERROR");
 					e.printStackTrace();
 				}
 			
