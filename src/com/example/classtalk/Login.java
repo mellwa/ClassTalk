@@ -134,8 +134,6 @@ public class Login extends Activity implements Observer, OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-                personName = login_name.getText().toString();
-                model.setName(personName);
             }
         });
 		
@@ -155,8 +153,6 @@ public class Login extends Activity implements Observer, OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-            	user_password = login_password.getText().toString();
-            	model.setPassword(user_password);
             }
         });
 		

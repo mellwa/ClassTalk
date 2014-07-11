@@ -74,7 +74,7 @@ public class Client{
 					try {
 						while(clientSocket == null){}
 							Log.d("Socket ","create successfully");
-						BufferedReader inputs =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+						BufferedReader inputs = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 						//BufferedReader inputt =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 							Log.d("Client 10101020" , "od");
 						success = inputs.readLine();
@@ -90,7 +90,6 @@ public class Client{
 							break;
 						}
 						else if(success.equals("S")) {
-							Log.d("Client1010dfd01", "successs lalallalalala");
 							int building;
 							char[] buildings = new char[4];
 							String emptystring = null;
