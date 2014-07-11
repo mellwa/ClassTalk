@@ -69,34 +69,6 @@ public class Client{
 
 			}
 
-//			while(true){
-//				int num;
-//				int building;
-//				String room = null;
-//				try {
-//					while(clientSocket == null){}
-//					Log.d("Socket ","create successfully");
-//					input =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-//					num = input.read();
-//					if(num == 1){
-//						done = true;
-//						break;
-//					}
-//					building = input.read();
-//					room = input.readLine();
-//					//Log.d("from binder",room);
-//					//login.addBuildingRooms(building, room);
-//					//while(clientSocket == null){}
-//					//input2 =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-//					//message = input.readLine();
-//					Log.d("from server ",room + " " + building);
-//					
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			
-//			}
 			  while(true){
 					String success = null;
 					try {
@@ -164,38 +136,6 @@ public class Client{
 							}
 							
 						}
-//						else if(success.equals("1")) {
-//							done = true;
-//							login.feedback("S");
-//							break;
-//						}
-//						else if(success.equals("0")) {
-//							int building;
-//							String room1 = null;
-//							String room2 = null;
-//							String room3 = null;
-//							String room4 = null;
-//							String room = null;
-//							
-//							Log.d("Client1010dfd01", " si ge");
-//							building = inputs.read();
-//							Log.d("from binder", "Building " + building);
-//							
-////							emptystring = inputs.readLine();
-//							room1 = inputs.readLine();
-//							Log.d("from binder ",room1);
-//							room2 = inputs.readLine();
-//							Log.d("from binder ",room2);
-//							room3 = inputs.readLine();
-//							Log.d("from binder ",room3);
-//							room4 = inputs.readLine();
-//							Log.d("from binder ",room4);
-//							
-//							room = room1 + room2 + room3 + room4;
-//							Log.d("from binder ",room + " " + building);
-//							
-//							login.addBuildingRooms(building, room);
-//						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
