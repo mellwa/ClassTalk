@@ -34,7 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/input"
         android:layout_alignParentRight="true"
-        android:text="send" />
+        android:text="send"
+        android:src="@drawable/send_button" />
 
     <ScrollView
         android:id="@+id/scrollView1"
