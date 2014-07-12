@@ -3,37 +3,20 @@
     android:id="@+id/login"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent" >
-
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/goToSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/facebook_login_button"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="94dp"
-        android:text="Login" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_above="@+id/button1"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="72dp"
-        android:shadowColor="@android:color/white"
-        android:shadowRadius="0.1"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
+        android:layout_marginBottom="120dp"
+        android:text="GoToSignUp" />
 
     <ImageView
         android:id="@+id/facebook_login_button"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="70dp"
-        android:layout_toLeftOf="@+id/button1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="71dp"
         android:src="@drawable/login_button"
         android:visibility="visible" />
 
@@ -41,38 +24,82 @@
         android:id="@+id/login_password"
         android:layout_width="130dp"
         android:layout_height="40dp"
-        android:layout_above="@+id/button1"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="18dp"
+        android:layout_below="@+id/goToSignUp"
+        android:layout_toRightOf="@+id/goToLogin"
         android:ems="10"
         android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/signup_password"
-        android:layout_below="@+id/editText1"
-        android:text="SignUp" />
 
     <EditText
         android:id="@+id/signup_password"
         android:layout_width="130dp"
         android:layout_height="40dp"
-        android:layout_alignBaseline="@+id/login_password"
-        android:layout_alignBottom="@+id/login_password"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/login_password"
+        android:layout_below="@+id/goToSignUp"
         android:ems="10"
         android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/login_name"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/login_password"
+        android:layout_alignLeft="@+id/login_password"
+        android:layout_marginBottom="29dp"
+        android:ems="10"
+        android:shadowColor="@android:color/white"
+        android:shadowRadius="0.1" />
 
     <EditText
         android:id="@+id/signup_name"
         android:layout_width="130dp"
         android:layout_height="40dp"
-        android:layout_alignBaseline="@+id/editText1"
-        android:layout_alignBottom="@+id/editText1"
-        android:layout_alignParentLeft="true"
+        android:layout_alignBaseline="@+id/login_name"
+        android:layout_alignBottom="@+id/login_name"
+        android:layout_toRightOf="@+id/goToLogin"
         android:ems="10" />
+
+    <Button
+        android:id="@+id/goToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="GoToLogin" />
+
+    <Button
+        android:id="@+id/signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/login_button"
+        android:layout_below="@+id/login_password"
+        android:layout_marginTop="14dp"
+        android:text="SignUp" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/signup"
+        android:layout_alignBottom="@+id/signup"
+        android:layout_toRightOf="@+id/goToSignUp"
+        android:text="Login" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/login_name"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/login_name"
+        android:text="User Name" />
+
+    <TextView
+        android:id="@+id/Password"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/login_button"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/login_password"
+        android:text="Password" />
 
 </RelativeLayout>

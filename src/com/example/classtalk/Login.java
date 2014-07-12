@@ -55,6 +55,8 @@ public class Login extends Activity implements Observer, OnClickListener {
 	String user_password = "null";
 	String personName_real =  "null";
 	Button SignUpButt;
+	Button goToSignUpButt;
+	Button goToLogin;
 	ArrayList<String> DCrooms;
 	ArrayList<String> MCrooms;
 	Client client;
@@ -69,8 +71,8 @@ public class Login extends Activity implements Observer, OnClickListener {
 		RelativeLayout rl = (RelativeLayout) findViewById(R.id.login);
 		rl.setBackgroundResource(R.drawable.dc);
 
-		LoginButt = (Button)findViewById(R.id.button1);
-		login_name = (EditText)findViewById(R.id.editText1);
+		LoginButt = (Button)findViewById(R.id.login_button);
+		login_name = (EditText)findViewById(R.id.login_name);
 		login_name.setBackground(getResources().getDrawable(R.drawable.login_rec));
 		login_password = (EditText)findViewById(R.id.login_password);
 		login_password.setBackground(getResources().getDrawable(R.drawable.login_rec));
@@ -79,6 +81,9 @@ public class Login extends Activity implements Observer, OnClickListener {
 		signup_password = (EditText)findViewById(R.id.signup_password);
 		signup_password.setBackground(getResources().getDrawable(R.drawable.login_rec));
 		SignUpButt = (Button)findViewById(R.id.signup);
+		goToSignUpButt = (Button)findViewById(R.id.goToSignUp);
+		goToLogin = (Button)findViewById(R.id.goToLogin);
+		goToLogin.setVisibility(View.INVISIBLE);
 //		real_name = (EditText)findViewById(R.id.real_name);
 		
 		id = "855558154473328";
@@ -118,6 +123,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 			
 			}
 		});
+		SignUpButt.setVisibility(View.INVISIBLE);
 		
 		login_name.addTextChangedListener(new TextWatcher() {
 
@@ -177,6 +183,7 @@ public class Login extends Activity implements Observer, OnClickListener {
             	model.setName(personName);
             }
         });
+		signup_name.setVisibility(View.INVISIBLE);
 		
 		signup_password.addTextChangedListener(new TextWatcher() {
 
@@ -198,6 +205,39 @@ public class Login extends Activity implements Observer, OnClickListener {
             	model.setPassword(user_password);
             }
         });
+		signup_password.setVisibility(View.INVISIBLE);
+		
+		goToSignUpButt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				SignUpButt.setVisibility(View.VISIBLE);
+				signup_name.setVisibility(View.VISIBLE);
+				signup_password.setVisibility(View.VISIBLE);
+				LoginButt.setVisibility(View.INVISIBLE);
+				login_name.setVisibility(View.INVISIBLE);
+				login_password.setVisibility(View.INVISIBLE);
+				goToLogin.setVisibility(View.VISIBLE);
+				goToSignUpButt.setVisibility(View.INVISIBLE);
+			}
+		});
+		
+		goToLogin.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				SignUpButt.setVisibility(View.INVISIBLE);
+				signup_name.setVisibility(View.INVISIBLE);
+				signup_password.setVisibility(View.INVISIBLE);
+				LoginButt.setVisibility(View.VISIBLE);
+				login_name.setVisibility(View.VISIBLE);
+				login_password.setVisibility(View.VISIBLE);
+				goToSignUpButt.setVisibility(View.VISIBLE);
+				goToLogin.setVisibility(View.INVISIBLE);
+			}
+		});
 		
 		model = new Model();
 		model.addObserver(this);
