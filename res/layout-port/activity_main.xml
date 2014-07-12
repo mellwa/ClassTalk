@@ -65,12 +65,10 @@
         android:id="@+id/show_map_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/map"
-        android:layout_alignRight="@+id/map"
-        android:layout_marginBottom="16dp"
-        android:text="Button"
-        android:src = "@drawable/google_earth_icon"
-        android:onClick="Hide_Map" />
-
+        android:layout_alignBaseline="@+id/Enter_Button"
+        android:layout_alignBottom="@+id/Enter_Button"
+        android:layout_alignLeft="@+id/map"
+        android:onClick="Hide_Map"
+        android:src="@drawable/google_earth_icon" />
 
 </RelativeLayout>
