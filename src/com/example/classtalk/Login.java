@@ -101,7 +101,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 				// TODO Auto-generated method stub
 				try {
 	            	personName = login_name.getText().toString();
-	            	model.setPassword(user_password);
+	            	model.setName(personName);
 	            	user_password = login_password.getText().toString();
 	            	model.setPassword(user_password);
 					while(client.doneconnecttobinder(client, "SIGN_INN"));
@@ -248,7 +248,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		model.addObserver(this);
 		model.initObservers();
 		try {
-			client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",22878, model, this);
+			client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",59787, model, this);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

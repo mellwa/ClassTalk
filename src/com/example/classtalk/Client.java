@@ -3,6 +3,7 @@ package com.example.classtalk;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
@@ -37,8 +38,6 @@ public class Client{
 		  model = m;
 		  done = false;
 
-			clientSocket = new Socket(dstAddress,dstPort);
-		   //new Thread(new ConnectToBinder()).start();
 	  }
 	  Client(String addr, int port, Model m, Talk t){
 	   dstAddress = addr;
@@ -48,17 +47,35 @@ public class Client{
 	   new Thread(new ConnectToServer()).start();
 	  }
 	  
+	  
+	  
 	  class ConnectToBinder implements Runnable{
-
+		  Client client;
+		  String sign_log;
+		  public ConnectToBinder(Client client, String sign_log) {
+			  this.client = client;
+			  this.sign_log = sign_log;
+		  }
 		@Override
 		public void run() {
 			try {
-				//clientSocket = new Socket(dstAddress,dstPort);
-				if(out == null)
-				out  = new PrintWriter(clientSocket.getOutputStream(), true);
-				Log.d("done the socket create","start to write to binder");
-				//out.write("cc");//tell binder this is a client
-				//out.write(1);//tell binder this is a client
+				client.clientSocket = new Socket(dstAddress,dstPort);
+				if(client.clientSocket == null){
+					Log.d("Socket","creation failed");
+					System.exit(-1);
+				}
+				DataOutputStream out_stream = new DataOutputStream(client.clientSocket.getOutputStream());
+				  
+				  out_stream.writeInt(1);
+				  out_stream.writeBytes(sign_log);
+				  
+				  Log.d("Client105105105" , sign_log);
+				  
+				  int length = personName.length();
+				  out_stream.writeInt(length);
+				  out_stream.writeBytes(personName);
+				  out_stream.writeInt(password.length());
+				  out_stream.writeBytes(password);
 
 				//out.flush();
 			} catch (UnknownHostException e) {
@@ -76,15 +93,17 @@ public class Client{
 					try {
 						while(clientSocket == null){}
 							Log.d("Socket ","create successfully");
-						BufferedReader inputs = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-						//BufferedReader inputt =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-							Log.d("Client 10101020" , "od");
-						success = inputs.readLine();
-							Log.d("Client 10101020" , success);
+						//BufferedReader inputs = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+						InputStream is = clientSocket.getInputStream();
+							//BufferedReader inputt =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+							byte[] buffer = new byte[1];
+							is.read(buffer);
+						//success = inputs.readLine();
+							success = new String(buffer);
+							Log.d("Client:103" , success);
 						if(success.equals("F")) {
-							Log.d("Client101001", "faileuresrlssf dsala!");
+							Log.d("Client:105", "faileuresrlssf dsala!");
 							login.feedback("F");
-							Log.d("Client101001", "faileuresrlssf dsala!");
 							break;
 						}
 						else if(success.equals("N")) {
@@ -101,8 +120,11 @@ public class Client{
 							String room4 = null;
 							String room = null;
 							
-							success = inputs.readLine();
-							Log.d("Client1010dfd01", " read llllaaa  " +  success);
+							byte[] buffer2 = new byte[1];
+							is.read(buffer2);
+							//success = inputs.readLine();
+							success = new String(buffer2);
+							Log.d("Client:line121", " read llllaaa  " +  success);
 
 							if(success.equals("1")) {
 								done = true;
@@ -112,26 +134,21 @@ public class Client{
 							else if(success.equals("0")) {
 								Log.d("Client1010dfd01", " si ge");
 								//input =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-								inputs.read(buildings, 0, 4);
-								int bu = Integer.parseInt(buildings.toString());
+								//inputs.read(buildings, 0, 4);
+								byte[] buffer3 = new byte[2];
+								int bu = is.read(buffer3);
+								String s = new String(buffer3);
 								
-								Log.d("from binder ","building is " + bu + " " + buildings.toString()) ;
+								Log.d("from binder ","building is " + s + " ") ;
 //								building = Integer.parseInt(buildings);
 								
 //								Log.d("Client1010dfd01", "Building " + building);
 								
 //								emptystring = inputs.readLine();
-								room1 = inputs.readLine();
-								Log.d("from binder ",room1);
-								room2 = inputs.readLine();
-								Log.d("from binder ",room2);
-								room3 = inputs.readLine();
-								Log.d("from binder ",room3);
-								room4 = inputs.readLine();
-								Log.d("from binder ",room4);
-								
-								room = room1 + room2 + room3 + room4;
-								Log.d("from binder ",room + " " + buildings);
+								byte[] buffer4 = new byte[4];
+								bu = is.read(buffer4);
+								room = new String(buffer4);
+								Log.d("from binder ",room);
 								
 //								login.addBuildingRooms(buildings, room);
 							}
@@ -149,24 +166,14 @@ public class Client{
 	  boolean doneconnecttobinder(Client client , String sign_log) throws IOException{
 		  personName = model.getName();
 		  password = model.getPassword();
-		  DataOutputStream out_stream = new DataOutputStream(client.clientSocket.getOutputStream());
-		  
-		  
-		  out_stream.writeInt(1);
-		  out_stream.writeBytes(sign_log);
-		  
-		  Log.d("Client105105105" , sign_log);
+
 		  Log.d("Client105105105" , "person name is " + personName);
 		  Log.d("Client105105105" , "password is " + password);
 		  Log.d("Client105105105" , "name length is " + personName.length());
 		  Log.d("Client105105105" , "password length is " + password.length());
 		  
-		  int length = personName.length();
-		  out_stream.writeInt(length);
-		  out_stream.writeBytes(personName);
-		  out_stream.writeInt(password.length());
-		  out_stream.writeBytes(password);
-		  new Thread(new ConnectToBinder()).start();
+		  
+		  new Thread(new ConnectToBinder(client, sign_log)).start();
 		return done;
 		
 		  
