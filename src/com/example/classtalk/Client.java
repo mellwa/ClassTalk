@@ -30,13 +30,15 @@ public class Client{
 	  boolean done = false;
 	  String password;
 	  
-	  Client(String addr, int port, Model m,  Login login){
+	  Client(String addr, int port, Model m,  Login login) throws UnknownHostException, IOException{
 		  dstAddress = addr;
 		  dstPort = port;
 		  this.login = login;
 		  model = m;
 		  done = false;
-		   new Thread(new ConnectToBinder()).start();
+
+			clientSocket = new Socket(dstAddress,dstPort);
+		   //new Thread(new ConnectToBinder()).start();
 	  }
 	  Client(String addr, int port, Model m, Talk t){
 	   dstAddress = addr;
@@ -51,14 +53,14 @@ public class Client{
 		@Override
 		public void run() {
 			try {
-				clientSocket = new Socket(dstAddress,dstPort);
+				//clientSocket = new Socket(dstAddress,dstPort);
 				if(out == null)
 				out  = new PrintWriter(clientSocket.getOutputStream(), true);
 				Log.d("done the socket create","start to write to binder");
 				//out.write("cc");//tell binder this is a client
 				//out.write(1);//tell binder this is a client
 
-				out.flush();
+				//out.flush();
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
 				Log.d("from server","auiwhduidhauiwd we are catched");

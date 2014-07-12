@@ -1,6 +1,7 @@
 package com.example.classtalk;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -246,7 +247,15 @@ public class Login extends Activity implements Observer, OnClickListener {
 		model = new Model();
 		model.addObserver(this);
 		model.initObservers();
-		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",22878, model, this);//connect to binder
+		try {
+			client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",22878, model, this);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//connect to binder
 	}
 	
 	public void addBuildingRooms(int building,String room){
