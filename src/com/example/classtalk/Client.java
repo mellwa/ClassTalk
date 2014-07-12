@@ -112,12 +112,6 @@ public class Client{
 						}
 						else if(success.equals("S")) {
 							int building;
-							char[] buildings = new char[4];
-							String emptystring = null;
-							String room1 = null;
-							String room2 = null;
-							String room3 = null;
-							String room4 = null;
 							String room = null;
 							
 							byte[] buffer2 = new byte[1];
