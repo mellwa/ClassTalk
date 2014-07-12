@@ -22,6 +22,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -54,6 +56,8 @@ public class MainActivity extends Activity implements Observer, LocationListener
 	String personName;
 	Client client;
 	GoogleMap map;
+	Fragment google_map;
+//	FragmentTransaction Fragmenttr;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,8 @@ public class MainActivity extends Activity implements Observer, LocationListener
 		BuildingSpinner = (Spinner) findViewById(R.id.Building_Spinner);
 		RoomSpinner = (Spinner) findViewById(R.id.Room_Spinner);
 		EnterButt = (Button) findViewById(R.id.Enter_Button);
+		google_map = (Fragment) getFragmentManager().findFragmentById(R.id.map);
+//		Fragmenttr = getFragmentManager().beginTransaction();
 		
 		//adapters for spinnners
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,buildings);
@@ -177,6 +183,20 @@ public class MainActivity extends Activity implements Observer, LocationListener
 			MCrooms = extras.getStringArrayList("MCrooms");
 			DCrooms = extras.getStringArrayList("DCrooms");
 		}
+	}
+	
+	//called by xml show_map_button
+	public void Hide_Map(View v) {
+//		Fragmenttr.show(google_map);
+		if(model.getVisible() == 0) {
+			google_map.getView().setVisibility(View.VISIBLE);
+			model.setVisible();
+		}
+		else {
+			google_map.getView().setVisibility(View.INVISIBLE);
+			model.setInvisible();
+		}
+		
 	}
 	
 	@Override

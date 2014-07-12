@@ -11,10 +11,23 @@ public class Model extends Observable{
 	String personName;
 	String user_password;
 	String real_name;
+	int isVisible = 0;
 	
 	StringBuffer buffer = new StringBuffer();
 	
 	boolean canEnter = false;
+	
+	public void setInvisible() {
+		isVisible = 0;
+	}
+	
+	public void setVisible() {
+		isVisible = 1;
+	}
+	
+	public int getVisible() {
+		return isVisible;
+	}
 	
 	public String getName() {
 		return personName;
