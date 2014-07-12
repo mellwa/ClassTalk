@@ -111,40 +111,38 @@ public class Client{
 							break;
 						}
 						else if(success.equals("S")) {
-							int building;
-							String room = null;
-							
-							byte[] buffer2 = new byte[1];
-							is.read(buffer2);
-							//success = inputs.readLine();
-							success = new String(buffer2);
-							Log.d("Client:line121", " read llllaaa  " +  success);
-
-							if(success.equals("1")) {
-								done = true;
-								login.feedback("S");
-								break;
-							}
-							else if(success.equals("0")) {
-								Log.d("Client1010dfd01", " si ge");
-								//input =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-								//inputs.read(buildings, 0, 4);
-								byte[] buffer3 = new byte[2];
-								int bu = is.read(buffer3);
-								String s = new String(buffer3);
+							while(true){
+								int building;
+								String room = null;
 								
-								Log.d("from binder ","building is " + s + " ") ;
-//								building = Integer.parseInt(buildings);
-								
-//								Log.d("Client1010dfd01", "Building " + building);
-								
-//								emptystring = inputs.readLine();
-								byte[] buffer4 = new byte[4];
-								bu = is.read(buffer4);
-								room = new String(buffer4);
-								Log.d("from binder ",room);
-								
-//								login.addBuildingRooms(buildings, room);
+								byte[] buffer2 = new byte[1];
+								is.read(buffer2);
+								//success = inputs.readLine();
+								success = new String(buffer2);
+								Log.d("Client:line121", " read llllaaa  " +  success);
+	
+								if(success.equals("1")) {
+									done = true;
+									login.feedback("S");
+									break;
+								}
+								else if(success.equals("0")) {
+									Log.d("Client1010dfd01", " si ge");
+									//input =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+									//inputs.read(buildings, 0, 4);
+									byte[] buffer3 = new byte[2];
+									int bu = is.read(buffer3);
+									String buildings = new String(buffer3);
+									
+									Log.d("from binder ","building is " + buildings + " ") ;
+									byte[] buffer4 = new byte[4];
+									bu = is.read(buffer4);
+									room = new String(buffer4);
+									Log.d("from binder ",room);
+									
+									login.addBuildingRooms(buildings, room);
+									
+								}
 							}
 							
 						}

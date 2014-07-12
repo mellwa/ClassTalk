@@ -68,6 +68,18 @@ public class MainActivity extends Activity implements Observer, LocationListener
 		RelativeLayout rl = (RelativeLayout) findViewById(R.id.MainActivity);
 		rl.setBackgroundResource(R.drawable.dc);
 		//client = new Client("ubuntu1204-004.student.cs.uwaterloo.ca",33787,this);
+		Bundle extras = getIntent().getExtras();
+		if(extras != null) {
+			//do things on resume mode
+			personName = extras.getString("PersonName");
+			MCrooms = extras.getStringArrayList("MCrooms");
+			DCrooms = extras.getStringArrayList("DCrooms");
+			Log.d("MainActivity: 77", "get MC and DC's rooms");
+			if(MCrooms != null)
+			Log.d("MC room: ",MCrooms.get(0));
+		}else{
+			Log.d("MainActivity: 79", "didn't get MC and DC's rooms");
+		}
 		
 		BuildingSpinner = (Spinner) findViewById(R.id.Building_Spinner);
 		RoomSpinner = (Spinner) findViewById(R.id.Room_Spinner);

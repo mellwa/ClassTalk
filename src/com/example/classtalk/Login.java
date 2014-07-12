@@ -258,11 +258,11 @@ public class Login extends Activity implements Observer, OnClickListener {
 		}//connect to binder
 	}
 	
-	public void addBuildingRooms(int building,String room){
-		if(building == 1){
+	public void addBuildingRooms(String building,String room){
+		if(building == "MC"){
 			MCrooms.add(room);
 		}
-		else if(building == 2){
+		else if(building == "DC"){
 			DCrooms.add(room);
 		}
 		else;
