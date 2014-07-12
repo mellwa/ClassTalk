@@ -18,7 +18,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="71dp"
         android:src="@drawable/login_button"
-        android:visibility="visible" />
+        android:visibility="visible"
+         />
 
     <EditText
         android:id="@+id/login_password"
@@ -27,7 +28,8 @@
         android:layout_below="@+id/goToSignUp"
         android:layout_toRightOf="@+id/goToLogin"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:hint="Password" />
 
     <EditText
         android:id="@+id/signup_password"
@@ -36,7 +38,8 @@
         android:layout_alignLeft="@+id/login_password"
         android:layout_below="@+id/goToSignUp"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:hint="Password" />
 
     <EditText
         android:id="@+id/login_name"
@@ -47,7 +50,8 @@
         android:layout_marginBottom="29dp"
         android:ems="10"
         android:shadowColor="@android:color/white"
-        android:shadowRadius="0.1" />
+        android:shadowRadius="0.1"
+        android:hint="username"  />
 
     <EditText
         android:id="@+id/signup_name"
@@ -56,7 +60,8 @@
         android:layout_alignBaseline="@+id/login_name"
         android:layout_alignBottom="@+id/login_name"
         android:layout_toRightOf="@+id/goToLogin"
-        android:ems="10" />
+        android:ems="10"
+        android:hint="username"  />
 
     <Button
         android:id="@+id/goToLogin"
@@ -91,7 +96,7 @@
         android:layout_alignBottom="@+id/login_name"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/login_name"
-        android:text="User Name" />
+        android:text="User Name"  />
 
     <TextView
         android:id="@+id/Password"
