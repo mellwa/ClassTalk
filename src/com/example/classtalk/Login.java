@@ -140,6 +140,8 @@ public class Login extends Activity implements Observer, OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
+            	personName = login_name.getText().toString();
+            	model.setPassword(user_password);
             }
         });
 		
@@ -159,6 +161,8 @@ public class Login extends Activity implements Observer, OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
+            	user_password = login_password.getText().toString();
+            	model.setPassword(user_password);
             }
         });
 		
@@ -242,7 +246,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		model = new Model();
 		model.addObserver(this);
 		model.initObservers();
-		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",1027, model, this);//connect to binder
+		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",22878, model, this);//connect to binder
 	}
 	
 	public void addBuildingRooms(int building,String room){
