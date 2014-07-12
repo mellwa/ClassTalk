@@ -259,14 +259,23 @@ public class Login extends Activity implements Observer, OnClickListener {
 	}
 	
 	public void addBuildingRooms(String building,String room){
-		if(building == "MC"){
+		if(building.equals("MC")){
 			Log.d("Login: 263","add MC room into list");
+			if(MCrooms == null){
+				MCrooms = new ArrayList<String>();
+			}
 			MCrooms.add(room);
 		}
-		else if(building == "DC"){
+		else if(building.equals("DC")){
+			Log.d("Login: 267","add DC room into list");
+			if(DCrooms == null){
+				DCrooms = new ArrayList<String>();
+			}
 			DCrooms.add(room);
 		}
-		else;
+		else{
+			Log.d("Login: 270","add rooms failed");;
+		}
 		model.setMCrooms(MCrooms);
 		model.setDCrooms(DCrooms);
 	}

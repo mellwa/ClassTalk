@@ -83,9 +83,7 @@ public class MainActivity extends Activity implements Observer, LocationListener
 			Log.d("MainActivity: 79", "didn't get MC and DC's rooms");
 		}
 		
-		if(model != null) {
-			Log.d("MainActivity: 87" , "DC rooms" + model.getDCrooms().);
-		}
+		
 		BuildingSpinner = (Spinner) findViewById(R.id.Building_Spinner);
 		RoomSpinner = (Spinner) findViewById(R.id.Room_Spinner);
 		EnterButt = (Button) findViewById(R.id.Enter_Button);
@@ -169,7 +167,7 @@ public class MainActivity extends Activity implements Observer, LocationListener
 				
 			}
 		});
-		model = new Model();
+		//model = new Model();
 		model.addObserver(this);
 		model.initObservers();
 	}
