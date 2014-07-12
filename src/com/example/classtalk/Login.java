@@ -267,6 +267,8 @@ public class Login extends Activity implements Observer, OnClickListener {
 			DCrooms.add(room);
 		}
 		else;
+		model.setMCrooms(MCrooms);
+		model.setDCrooms(DCrooms);
 	}
 	
 	public void Start() {
@@ -276,6 +278,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 		intent.putExtra("passwrod", user_password);
 		intent.putExtra("mcrooms" , MCrooms);
 		intent.putExtra("dcrooms" , DCrooms);
+		intent.putExtra("Model" , model);
 		
 		startActivity(intent);
 	}	

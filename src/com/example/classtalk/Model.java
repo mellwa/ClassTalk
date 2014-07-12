@@ -1,21 +1,41 @@
 package com.example.classtalk;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import android.util.Log;
 
-public class Model extends Observable{
+public class Model extends Observable implements Serializable{
 	String Building;
 	String Room;
 	String personName;
 	String user_password;
 	String real_name;
 	int isVisible = 0;
+	ArrayList<String> DCrooms;
+	ArrayList<String> MCrooms;
 	
 	StringBuffer buffer = new StringBuffer();
 	
 	boolean canEnter = false;
+	
+	public void setDCrooms (ArrayList<String> input) {
+		DCrooms = input;
+	}
+	
+	public void setMCrooms(ArrayList<String> input) {
+		MCrooms = input;
+	}
+	
+	public ArrayList<String> getDCrooms() {
+		return DCrooms;
+	}
+	
+	public ArrayList<String> getMCrooms() {
+		return MCrooms;
+	}
 	
 	public void setInvisible() {
 		isVisible = 0;

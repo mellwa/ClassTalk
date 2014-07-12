@@ -71,9 +71,11 @@ public class MainActivity extends Activity implements Observer, LocationListener
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
 			//do things on resume mode
+			Intent i = getIntent();
 			personName = extras.getString("PersonName");
-			MCrooms = extras.getStringArrayList("MCrooms");
-			DCrooms = extras.getStringArrayList("DCrooms");
+			model = (Model)i.getSerializableExtra("Model");
+			MCrooms = model.getMCrooms();
+			DCrooms = model.getDCrooms();
 			Log.d("MainActivity: 77", "get MC and DC's rooms");
 			if(MCrooms != null)
 			Log.d("MC room: ",MCrooms.get(0));
@@ -81,6 +83,9 @@ public class MainActivity extends Activity implements Observer, LocationListener
 			Log.d("MainActivity: 79", "didn't get MC and DC's rooms");
 		}
 		
+		if(model != null) {
+			Log.d("MainActivity: 87" , "DC rooms" + model.getDCrooms().);
+		}
 		BuildingSpinner = (Spinner) findViewById(R.id.Building_Spinner);
 		RoomSpinner = (Spinner) findViewById(R.id.Room_Spinner);
 		EnterButt = (Button) findViewById(R.id.Enter_Button);
@@ -127,43 +132,43 @@ public class MainActivity extends Activity implements Observer, LocationListener
     		map.animateCamera(update);
         }
 		
-//		BuildingSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-//			RelativeLayout rl = (RelativeLayout) findViewById(R.id.MainActivity);
-//			@Override
-//			public void onItemSelected(AdapterView<?> arg0, View arg1,
-//					int arg2, long arg3) {
-//				
-//				if(BuildingSpinner.getSelectedItem().toString().equalsIgnoreCase("DC")){
-//					RoomSpinner.setAdapter(adapter1);	
-//					rl.setBackgroundResource(R.drawable.dc);
-//				}
-//				else{
-//					RoomSpinner.setAdapter(adapter2);
-//					rl.setBackgroundResource(R.drawable.mc);
-//				}
-//				inputBuilding = BuildingSpinner.getSelectedItem().toString();
-//			}
-//			@Override
-//			public void onNothingSelected(AdapterView<?> arg0) {
-//				// TODO Auto-generated method stub	
-//			}		
-//		});
-//		
-//		RoomSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-//
-//			@Override
-//			public void onItemSelected(AdapterView<?> arg0, View arg1,
-//					int arg2, long arg3) {
-//				// TODO Auto-generated method stub
-//				inputRoom = RoomSpinner.getSelectedItem().toString();
-//			}
-//
-//			@Override
-//			public void onNothingSelected(AdapterView<?> arg0) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
+		BuildingSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			RelativeLayout rl = (RelativeLayout) findViewById(R.id.MainActivity);
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				
+				if(BuildingSpinner.getSelectedItem().toString().equalsIgnoreCase("DC")){
+					RoomSpinner.setAdapter(adapter1);	
+					rl.setBackgroundResource(R.drawable.dc);
+				}
+				else{
+					RoomSpinner.setAdapter(adapter2);
+					rl.setBackgroundResource(R.drawable.mc);
+				}
+				inputBuilding = BuildingSpinner.getSelectedItem().toString();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub	
+			}		
+		});
+		
+		RoomSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				inputRoom = RoomSpinner.getSelectedItem().toString();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		model = new Model();
 		model.addObserver(this);
 		model.initObservers();
@@ -189,11 +194,13 @@ public class MainActivity extends Activity implements Observer, LocationListener
 		super.onResume();
 		Log.d("chaochen","back here");
 		Bundle extras = getIntent().getExtras();
+		Intent i = getIntent();
 		if(extras != null) {
 			//do things on resume mode
 			personName = extras.getString("PersonName");
 			MCrooms = extras.getStringArrayList("MCrooms");
 			DCrooms = extras.getStringArrayList("DCrooms");
+			model = (Model)i.getSerializableExtra("Model");
 		}
 	}
 	
