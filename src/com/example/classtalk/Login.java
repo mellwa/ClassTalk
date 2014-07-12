@@ -260,6 +260,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 	
 	public void addBuildingRooms(String building,String room){
 		if(building == "MC"){
+			Log.d("Login: 263","add MC room into list");
 			MCrooms.add(room);
 		}
 		else if(building == "DC"){

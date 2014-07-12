@@ -134,11 +134,11 @@ public class Client{
 									int bu = is.read(buffer3);
 									String buildings = new String(buffer3);
 									
-									Log.d("from binder ","building is " + buildings + " ") ;
+									Log.d("Client: 137 ","building is " + buildings) ;
 									byte[] buffer4 = new byte[4];
 									bu = is.read(buffer4);
 									room = new String(buffer4);
-									Log.d("from binder ",room);
+									Log.d("Client: 141 ","the room number is "+room);
 									
 									login.addBuildingRooms(buildings, room);
 									
