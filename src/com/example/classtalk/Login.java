@@ -99,6 +99,10 @@ public class Login extends Activity implements Observer, OnClickListener {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				try {
+	            	personName = login_name.getText().toString();
+	            	model.setPassword(user_password);
+	            	user_password = login_password.getText().toString();
+	            	model.setPassword(user_password);
 					while(client.doneconnecttobinder(client, "SIGN_INN"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -140,8 +144,6 @@ public class Login extends Activity implements Observer, OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-            	personName = login_name.getText().toString();
-            	model.setPassword(user_password);
             }
         });
 		
@@ -161,8 +163,6 @@ public class Login extends Activity implements Observer, OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-            	user_password = login_password.getText().toString();
-            	model.setPassword(user_password);
             }
         });
 		
