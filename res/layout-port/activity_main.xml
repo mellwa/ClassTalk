@@ -69,6 +69,7 @@
         android:layout_alignBottom="@+id/Enter_Button"
         android:layout_alignLeft="@+id/map"
         android:onClick="Hide_Map"
-        android:src="@drawable/google_earth_icon" />
+        android:background="?android:attr/selectableItemBackground"
+        android:drawableLeft="@drawable/google_earth_icon" />
 
 </RelativeLayout>
