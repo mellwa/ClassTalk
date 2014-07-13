@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 
+import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -61,6 +62,7 @@ public class Client{
 	   talk = t;
 	   //new Thread(new ConnectToServer()).start();
 	  }
+	  
 	  
 	  class RequestSever implements Runnable{
 		  Client client;
@@ -192,6 +194,12 @@ public class Client{
 							break;
 						}
 						else if(success.equals("S")) {
+							if(sign_log.equals("SIGN_UPP")){
+								//dialog
+								AlertDialog alert = login.createAlertDialog();
+								alert.show();
+								break;
+							}
 							while(true){
 								int building;
 								String room = null;

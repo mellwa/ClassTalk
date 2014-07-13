@@ -14,6 +14,8 @@ import com.facebook.model.*;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -315,6 +317,30 @@ public class Login extends Activity implements Observer, OnClickListener {
 			}
 		});
 		
+	}
+	
+	AlertDialog createAlertDialog(){
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				this);
+ 
+			// set title
+			alertDialogBuilder.setTitle("Your Title");
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage("Signup successfully!")
+				.setCancelable(false)
+				.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						// if this button is clicked, just close
+						// the dialog box and do nothing
+						dialog.cancel();
+					}
+				});
+ 
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				return alertDialog;
 	}
 		
 	@Override
