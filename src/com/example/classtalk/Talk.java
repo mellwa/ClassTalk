@@ -30,7 +30,8 @@ public class Talk extends Activity implements Observer {
 		Log.d("Talk" , "Talk: on create");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_talk);
-		
+
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 		model = new Model();
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {

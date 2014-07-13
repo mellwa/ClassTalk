@@ -64,6 +64,8 @@ public class Login extends Activity implements Observer, OnClickListener {
 	ArrayList<String> MCrooms;
 	Client client;
 	String feedback1;
+	Login login;
+	AlertDialog alertDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,8 @@ public class Login extends Activity implements Observer, OnClickListener {
 		setContentView(R.layout.activity_login);
 		RelativeLayout rl = (RelativeLayout) findViewById(R.id.login);
 		rl.setBackgroundResource(R.drawable.dc);
-
+		getActionBar().setDisplayHomeAsUpEnabled(false);
+		
 		LoginButt = (Button)findViewById(R.id.login_button);
 		login_name = (EditText)findViewById(R.id.login_name);
 		login_name.setBackground(getResources().getDrawable(R.drawable.login_rec));
@@ -304,6 +307,10 @@ public class Login extends Activity implements Observer, OnClickListener {
 					Log.d("Client101001", "faileuresrlssf dsala!");
 					login_name.setText("");
 					login_password.setText("");
+					login.loginFailed();
+				}
+				else if(feedback1.equals("F_Signup")){
+					login.signupFailed();
 				}
 				else if(feedback1.equals("N")) {
 					Log.d("Client101001", " yea yea no server la");
@@ -319,30 +326,102 @@ public class Login extends Activity implements Observer, OnClickListener {
 		
 	}
 	
-	AlertDialog createAlertDialog(){
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-				this);
- 
-			// set title
-			alertDialogBuilder.setTitle("Your Title");
- 
-			// set dialog message
-			alertDialogBuilder
-				.setMessage("Signup successfully!")
-				.setCancelable(false)
-				.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int id) {
-						// if this button is clicked, just close
-						// the dialog box and do nothing
-						dialog.cancel();
-					}
-				});
- 
-				// create alert dialog
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				return alertDialog;
+	void signupSuccessfull(){
+		login = this;
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						login);
+		 
+					// set title
+					alertDialogBuilder.setTitle("Congratulations!");
+		 
+					// set dialog message
+					alertDialogBuilder
+						.setMessage("Signup successfully!")
+						.setCancelable(false)
+						.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								// if this button is clicked, just close
+								// the dialog box and do nothing
+								dialog.cancel();
+							}
+						});
+		 
+						// create alert dialog
+						alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
+			}
+		});
 	}
 		
+	void signupFailed(){
+		login = this;
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						login);
+		 
+					// set title
+					alertDialogBuilder.setTitle("Sign up failed");
+		 
+					// set dialog message
+					alertDialogBuilder
+						.setMessage("There is already such a user name!")
+						.setCancelable(false)
+						.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								// if this button is clicked, just close
+								// the dialog box and do nothing
+								dialog.cancel();
+							}
+						});
+		 
+						// create alert dialog
+						alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
+			}
+		});
+	}
+	
+	void loginFailed(){
+		login = this;
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						login);
+		 
+					// set title
+					alertDialogBuilder.setTitle("Login failed");
+		 
+					// set dialog message
+					alertDialogBuilder
+						.setMessage("Login failed!")
+						.setCancelable(false)
+						.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								// if this button is clicked, just close
+								// the dialog box and do nothing
+								dialog.cancel();
+							}
+						});
+		 
+						// create alert dialog
+						alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
+			}
+		});
+	}
+	
 	@Override
 	public void update(Observable observable, Object data) {
 		// TODO Auto-generated method stub

@@ -67,6 +67,7 @@ public class MainActivity extends Activity implements Observer, LocationListener
 		setContentView(R.layout.activity_main);
 		RelativeLayout rl = (RelativeLayout) findViewById(R.id.MainActivity);
 		rl.setBackgroundResource(R.drawable.dc);
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 		//client = new Client("ubuntu1204-004.student.cs.uwaterloo.ca",33787,this);
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {

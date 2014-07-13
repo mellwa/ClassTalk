@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -186,7 +187,11 @@ public class Client{
 							Log.d("Client:103" , success);
 						if(success.equals("F")) {
 							Log.d("Client:105", "faileuresrlssf dsala!");
-							login.feedback("F");
+							if(sign_log.equals("SIGN_UPP")){
+								login.feedback("F_Signup");
+							}else{
+								login.feedback("F");
+							}
 							break;
 						}
 						else if(success.equals("N")) {
@@ -196,8 +201,7 @@ public class Client{
 						else if(success.equals("S")) {
 							if(sign_log.equals("SIGN_UPP")){
 								//dialog
-								AlertDialog alert = login.createAlertDialog();
-								alert.show();
+								login.signupSuccessfull();
 								break;
 							}
 							while(true){
