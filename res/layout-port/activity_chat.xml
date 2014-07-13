@@ -35,6 +35,7 @@
         android:layout_alignBottom="@+id/input"
         android:layout_alignParentRight="true"
         android:text="send"
+        android:background="?android:attr/selectableItemBackground"
         android:src="@drawable/send_button" />
 
     <ScrollView
