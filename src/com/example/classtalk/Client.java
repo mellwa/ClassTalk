@@ -156,10 +156,12 @@ public class Client{
 				  Log.d("Client105105105" , sign_log);
 				  
 				  int length = personName.length();
-				  out_stream.writeInt(length);
-				  out_stream.writeBytes(personName);
-				  out_stream.writeInt(password.length());
-				  out_stream.writeBytes(password);
+				  if(!sign_log.equals("FACEBOOK")){
+					  out_stream.writeInt(length);
+					  out_stream.writeBytes(personName);
+					  out_stream.writeInt(password.length());
+					  out_stream.writeBytes(password);
+				  }
 
 				//out.flush();
 			} catch (UnknownHostException e) {

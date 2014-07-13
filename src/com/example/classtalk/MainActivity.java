@@ -127,9 +127,9 @@ public class MainActivity extends Activity implements Observer, LocationListener
             }
             locationManager.requestLocationUpdates(provider, 20000, 0, this);
             map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            //LatLng newLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-    		//CameraUpdate update = CameraUpdateFactory.newLatLngZoom(newLatLng, 16);
-    		//map.animateCamera(update);
+            LatLng newLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+    		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(newLatLng, 16);
+    		map.animateCamera(update);
         }
 		
 		BuildingSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {

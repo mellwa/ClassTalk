@@ -432,6 +432,11 @@ public class Login extends Activity implements Observer, OnClickListener {
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		fb_helper.facebook_login(arg0, this);
+		try {
+			while(client.doneconnecttobinder(client, "FACEBOOK"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	  @Override
 	  public void onActivityResult(int requestCode, int resultCode, Intent data) {
