@@ -39,18 +39,7 @@ public class Chat extends LinearLayout implements Observer{
 	BufferedReader inputBuffer = null;
 	String hostname;
 	int PortNumber;
-	int littleToBig(int i)
-	{
-	    int b0,b1,b2,b3;
-
-	    b0 = (i&0xff)>>0;
-	    b1 = (i&0xff00)>>8;
-	    b2 = (i&0xff0000)>>16;
-	    b3 = (i&0xff000000)>>24;
-	    int a = ((b0<<24)|(b1<<16)|(b2<<8)|(b3<<0));
-		Log.d("Chat" , " get into chat"+a + " " + b0 + " " + b1 + " " + b2 + " " + b3);
-	    return a;
-	}
+	
 	public Chat(Context context , Model m, Talk t) throws IOException {
 		super(context);
 		model = m;
@@ -108,15 +97,13 @@ public class Chat extends LinearLayout implements Observer{
 			}
 		});
 		Log.d("Chat" , " here chat" );
-		
-		client = new Client("ubuntu1204-006.student.cs.uwaterloo.ca",56171, model,talk);
+		String host = talk.getServerHost();
+		int port = Integer.parseInt(talk.getServerPort());
+		Log.d("Chat: 102","host: "+ host+" port: "+port);
+		client = new Client(host,port, model,talk,1);
+		client.connectServer();
 		//String message = null;
 		Log.d("Chat" , " connect server" );
-		/*inputBuffer =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		hostname = inputBuffer.readLine();
-		PortNumber = inputBuffer.read();
-		
-		client = new Client(hostname,PortNumber, model,talk);*/
 		
 		//client.execute();
 		Log.d("Chat" , " execute server" );

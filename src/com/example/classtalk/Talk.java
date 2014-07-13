@@ -19,6 +19,9 @@ public class Talk extends Activity implements Observer {
 	Heading heading;
 	Chat chat;
 	String personName;
+	Client client;
+	String server_hostname;
+	String server_port;
 	
 	//blaite: indicate two views here as well
 
@@ -29,12 +32,6 @@ public class Talk extends Activity implements Observer {
 		setContentView(R.layout.activity_talk);
 		
 		model = new Model();
-	}
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
 			//blaite: save all the data
@@ -49,7 +46,18 @@ public class Talk extends Activity implements Observer {
 		
 		update(model, extras);
 		
+		client = new Client("ubuntu1204-002.student.cs.uwaterloo.ca",59787, model,this,0);
+		client.requestServerInfo();
+		server_hostname = client.getHost();
+		server_port = client.getPort();
 		Log.d("Talk", "on post create");
+	}
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		
+		
 		
 		//blaite: create two views to the talk activity
 		heading = new Heading(this, model);
@@ -93,6 +101,14 @@ public class Talk extends Activity implements Observer {
 				model.initObservers();
 			}
 		});
+	}
+	
+	String getServerHost(){
+		return server_hostname;
+	}
+	
+	String getServerPort(){
+		return server_port;
 	}
 	
 	public void restart(View v){
