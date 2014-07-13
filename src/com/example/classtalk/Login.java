@@ -307,7 +307,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 					Log.d("Client101001", "faileuresrlssf dsala!");
 					login_name.setText("");
 					login_password.setText("");
-					login.loginFailed();
+					//login.loginFailed();
 				}
 				else if(feedback1.equals("F_Signup")){
 					login.signupFailed();
