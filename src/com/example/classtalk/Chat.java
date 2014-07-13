@@ -112,11 +112,14 @@ public class Chat extends LinearLayout implements Observer{
 		Log.d("Chat" , " out server" );
 		String BuildRoom = model.GetBuilding() + model.GetRoom();
 		out.println(BuildRoom);
+		out.flush();
+		out.println(model.getName());
+		Log.d("Chat 117" , "person name " + model.getName() );
 		//Log.d("Chat" , " write server" );
 		//out.flush();
 		//out.write("Chao");
 		out.flush();
-		Log.d("Chat" , " finish chat" );
+		Log.d("Chat 122 " , " finish chat" );
 	}
 
 	public void receivedMessage(String s){
