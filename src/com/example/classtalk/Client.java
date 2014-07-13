@@ -280,8 +280,8 @@ public class Client{
 				Log.d("Client: 278", "after connect sever");
 				if(out == null)
 				out  = new PrintWriter(clientSocket.getOutputStream(), true);
-				out.println("hello server\n");
-				out.flush();
+//				out.println("hello server\n");
+//				out.flush();
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
 				Log.d("Client 285","UnknownHost");
