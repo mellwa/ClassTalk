@@ -39,6 +39,7 @@ import android.widget.TextView;
 import android.util.Log;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.support.v4.app.*;
 
 public class MainActivity extends Activity implements Observer, LocationListener  {
 	
