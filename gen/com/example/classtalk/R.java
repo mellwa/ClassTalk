@@ -550,7 +550,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f02000d;
         public static final int com_facebook_loginbutton_silver=0x7f02000e;
         public static final int com_facebook_logo=0x7f02000f;
-        public static final int com_facebook_picker_default_separator_color=0x7f020056;
+        public static final int com_facebook_picker_default_separator_color=0x7f02005a;
         public static final int com_facebook_picker_item_background=0x7f020010;
         public static final int com_facebook_picker_list_focused=0x7f020011;
         public static final int com_facebook_picker_list_longpressed=0x7f020012;
@@ -618,9 +618,13 @@ containing a value of this type.
         public static final int powered_by_google_dark=0x7f020050;
         public static final int powered_by_google_light=0x7f020051;
         public static final int send_button=0x7f020052;
-        public static final int startletter=0x7f020053;
-        public static final int startup=0x7f020054;
-        public static final int thefirst=0x7f020055;
+        public static final int signinin=0x7f020053;
+        public static final int signupin=0x7f020054;
+        public static final int signupout=0x7f020055;
+        public static final int singinout=0x7f020056;
+        public static final int startletter=0x7f020057;
+        public static final int startup=0x7f020058;
+        public static final int thefirst=0x7f020059;
     }
     public static final class id {
         public static final int Building=0x7f06001c;
