@@ -111,7 +111,7 @@ public class Chat extends LinearLayout implements Observer{
 		DataOutputStream out_stream = new DataOutputStream(client.clientSocket.getOutputStream());
 		Log.d("Chat" , " out server" );
 		String BuildRoom = model.GetBuilding() + model.GetRoom();
-		out_stream.writeInt(1);
+		out.println(BuildRoom);
 		//Log.d("Chat" , " write server" );
 		//out.flush();
 		//out.write("Chao");
