@@ -7,8 +7,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,6 +21,8 @@ import android.widget.TextView;
 public class Client{
 	  String dstAddress;
 	  int dstPort;
+	  String ServerHost;
+	  int ServerPort;
 	  String response = "";
 	  Socket clientSocket = null;
 	  PrintWriter out = null;
@@ -30,6 +34,12 @@ public class Client{
 	  Login login;
 	  boolean done = false;
 	  String password;
+	  String hostname;
+	  String port;
+	  boolean doneBinder = false;
+	  boolean hostget = false;
+	  boolean portget = false;
+	  
 	  
 	  Client(String addr, int port, Model m,  Login login) throws UnknownHostException, IOException{
 		  dstAddress = addr;
@@ -39,15 +49,86 @@ public class Client{
 		  done = false;
 
 	  }
-	  Client(String addr, int port, Model m, Talk t){
-	   dstAddress = addr;
-	   dstPort = port;
+	  Client(String addr, int port, Model m, Talk t, int binder_server){
+		 if(binder_server == 0){
+			 dstAddress = addr;
+			 dstPort = port;
+		 }else{
+		 	ServerHost = addr;
+		 	ServerPort = port;
+		 }
 	   model = m;
 	   talk = t;
-	   new Thread(new ConnectToServer()).start();
+	   //new Thread(new ConnectToServer()).start();
 	  }
 	  
+	  class RequestSever implements Runnable{
+		  Client client;
+		  public RequestSever(Client client) {
+			  this.client = client;
+		  }
+		@Override
+		public void run() {
+			try{
+				client.clientSocket = new Socket(dstAddress,dstPort);
+				if(client.clientSocket == null){
+					Log.d("Socket","creation failed");
+					System.exit(-1);
+				}
+				DataOutputStream out_stream = new DataOutputStream(client.clientSocket.getOutputStream());
+				out_stream.writeInt(3);
+				out_stream.writeBytes(model.GetRoom());
+				if(model.GetBuilding().equals("DC")){
+					out_stream.writeInt(2);
+				}else if(model.GetBuilding().equals("MC")){
+					out_stream.writeInt(1);
+				}
+				
+				//"ubuntu1204-002.student.cs.uwaterloo.ca"
+				String l = "ubuntu1204-004";
+				int length = l.length();
+				byte[] buffer2 = new byte[length];
+				InputStream is = clientSocket.getInputStream();
+				is.read(buffer2);
+				hostname = new String(buffer2);
+				hostname = hostname + ".student.cs.uwaterloo.ca";
+				hostget = true;
+				Log.d("Client: 85", "host: "+hostname+"length: "+length);
+				
+				int rval = -1;
+				Vector<Integer> v = new Vector<Integer>();
+				do{
+					rval = is.read();
+					if(rval != -1){
+						if(port == null){
+							port = ""+(char)rval;
+						}else{
+							port += (char)rval;
+						}
+					}
+				}while(rval != -1);
+				Log.d("Client: 89", "port: "+port);
+				portget = true;
+				client.clientSocket.close();
+			}catch(Exception e){
+				//do something
+			}
+		}	  
+	  }
 	  
+	  String getHost(){
+		  while(!hostget){
+			  //Log.d("waiting","server host");
+		  }
+		  return hostname;
+	  }
+	  
+	  String getPort(){
+		  while(!portget){
+			  //Log.d("waiting","server port");
+		  }
+		  return port;
+	  }
 	  
 	  class ConnectToBinder implements Runnable{
 		  Client client;
@@ -88,7 +169,7 @@ public class Client{
 
 			}
 
-			  while(true){
+			  while(!doneBinder){
 					String success = null;
 					try {
 						while(clientSocket == null){}
@@ -124,6 +205,7 @@ public class Client{
 								if(success.equals("1")) {
 									done = true;
 									login.feedback("S");
+									doneBinder = true;
 									break;
 								}
 								else if(success.equals("0")) {
@@ -152,6 +234,11 @@ public class Client{
 					}
 				
 				}
+			  try {
+				client.clientSocket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	  }
 	  
@@ -166,32 +253,42 @@ public class Client{
 		  
 		  
 		  new Thread(new ConnectToBinder(client, sign_log)).start();
-		return done;
-		
-		  
+		return done;  
 	  }
 	  
+	  void requestServerInfo(){
+		  new Thread(new RequestSever(this)).start();
+	  }
+	  
+	  void connectServer(){
+		  new Thread(new ConnectToServer()).start();
+	  }
+	  
+	  
+	  // connect to server
 	  class ConnectToServer implements Runnable{
-
+		  	public ConnectToServer() {
+		  		}
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			Log.d("from server","auiwhduidhauiwd we are catched");
 
 			//PrintWriter out;
 			try {
-				clientSocket = new Socket(dstAddress,dstPort);
+				Log.d("Client: 278", "before connect sever");
+				clientSocket = new Socket(ServerHost,ServerPort);
+				Log.d("Client: 278", "after connect sever");
 				if(out == null)
 				out  = new PrintWriter(clientSocket.getOutputStream(), true);
-//				out.println("hello server\n");
-//				out.flush();
+				out.println("hello server\n");
+				out.flush();
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
-				Log.d("from server","auiwhduidhauiwd we are catched");
+				Log.d("Client 285","UnknownHost");
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				Log.d("from server","iudahwdiuwhdi we are catched");
+				Log.d("Client 289","IO exception");
 
 			}
 
@@ -223,7 +320,7 @@ public class Client{
 	public PrintWriter getPrintWriter(){
 		int i = 0;
 		while(out == null){
-			//Log.d("client" , "out shi ge null" + i );
+			//Log.d("Client WAITING" , "print writer" + i );
 			i++;
 		}
 		return out;
