@@ -5,6 +5,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,11 +20,13 @@ public class Talk extends Activity implements Observer {
 	private String Room;
 	Heading heading;
 	Chat chat;
+	Talk talk;
 	String personName;
 	Client client;
 	String server_hostname;
 	String server_port;
-	
+	AlertDialog alertDialog;
+	AlertDialog welcomeDialog;
 	//blaite: indicate two views here as well
 
 	@Override
@@ -52,6 +56,8 @@ public class Talk extends Activity implements Observer {
 		server_hostname = client.getHost();
 		server_port = client.getPort();
 		Log.d("Talk", "on post create");
+		talk = this;
+		this.welcome();
 	}
 	
 	@Override
@@ -91,6 +97,70 @@ public class Talk extends Activity implements Observer {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
+	}
+	
+	void welcome(){
+		talk = this;
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						talk);
+		 
+					// set title
+					alertDialogBuilder.setTitle("ClassTalk");
+		 
+					// set dialog message
+					alertDialogBuilder
+						.setMessage("You are in "+Building+" "+Room)
+						.setCancelable(false)
+						.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								// if this button is clicked, just close
+								// the dialog box and do nothing
+								dialog.cancel();
+							}
+						});
+		 
+						// create alert dialog
+						welcomeDialog = alertDialogBuilder.create();
+						welcomeDialog.show();
+			}
+		});
+	}
+	
+	void emptyText(){
+		talk = this;
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						talk);
+		 
+					// set title
+					alertDialogBuilder.setTitle("Empty Text");
+		 
+					// set dialog message
+					alertDialogBuilder
+						.setMessage("Please do not enter empty text!")
+						.setCancelable(false)
+						.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								// if this button is clicked, just close
+								// the dialog box and do nothing
+								dialog.cancel();
+							}
+						});
+		 
+						// create alert dialog
+						alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
+			}
+		});
 	}
 	
 	public void updateModel(String s){

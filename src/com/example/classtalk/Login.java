@@ -2,9 +2,7 @@ package com.example.classtalk;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 import com.facebook.*;
 import com.facebook.Session.StatusCallback;
@@ -29,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,10 +38,12 @@ import android.widget.Toast;
 public class Login extends Activity implements Observer, OnClickListener {
 
 	Button LoginButt;
+	//ImageView LoginButt;
 	Model model;
 	EditText login_name;
 	String personName="null";
 	boolean getname = false;
+	ImageView fb_connect_button;
 	ImageView fb_login_button;
 	facebook_helper fb_helper;
 	Session activeSession;
@@ -62,10 +63,20 @@ public class Login extends Activity implements Observer, OnClickListener {
 	Button goToLogin;
 	ArrayList<String> DCrooms;
 	ArrayList<String> MCrooms;
+	ArrayList<Button> buttonlist;
+	ArrayList<EditText> edittextlist;
+	ArrayList<ImageView> imageviewlist;
 	Client client;
 	String feedback1;
 	Login login;
 	AlertDialog alertDialog;
+	ProgressBar spinner;
+	boolean loginphase = true;
+	Timer t;
+	Timer t2;
+	timer timertask;
+	timer2 timertask2;
+	int counter = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +106,27 @@ public class Login extends Activity implements Observer, OnClickListener {
 		id = "855558154473328";
 		fb_helper = new facebook_helper(id);
 		
+		fb_connect_button = (ImageView) findViewById(R.id.facebook_connect_button);
+		
+		fb_connect_button.setOnClickListener(this);
+		
 		fb_login_button = (ImageView) findViewById(R.id.facebook_login_button);
+		fb_login_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				try {
+					personName = fb_helper.getUserName();
+					while(client.doneconnecttobinder(client, "FACEBOOK"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		fb_login_button.setVisibility(View.INVISIBLE);
 		
-		fb_login_button.setOnClickListener(this);
-		
+		spinner = (ProgressBar) findViewById(R.id.waittingSpinner);
+		spinner.setVisibility(View.INVISIBLE);
 		
 		LoginButt.setOnClickListener(new OnClickListener() {
 			@Override
@@ -118,6 +146,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 				
 			}
 		});
+		
 		
 		SignUpButt.setOnClickListener(new OnClickListener() {
 			@Override
@@ -230,6 +259,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 				login_password.setVisibility(View.INVISIBLE);
 				goToLogin.setVisibility(View.VISIBLE);
 				goToSignUpButt.setVisibility(View.INVISIBLE);
+				loginphase = false;
 			}
 		});
 		
@@ -246,6 +276,7 @@ public class Login extends Activity implements Observer, OnClickListener {
 				login_password.setVisibility(View.VISIBLE);
 				goToSignUpButt.setVisibility(View.VISIBLE);
 				goToLogin.setVisibility(View.INVISIBLE);
+				loginphase = true;
 			}
 		});
 		
@@ -261,6 +292,11 @@ public class Login extends Activity implements Observer, OnClickListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//connect to binder
+		t = new Timer();
+		t2 = new Timer();
+		timertask = new timer(this);
+		timertask2 = new timer2(this);
+		
 	}
 	
 	public void addBuildingRooms(String building,String room){
@@ -296,6 +332,39 @@ public class Login extends Activity implements Observer, OnClickListener {
 		
 		startActivity(intent);
 	}	
+	
+	void Loading(){
+		if(loginphase){
+			LoginButt.setVisibility(View.INVISIBLE);
+			login_name.setVisibility(View.INVISIBLE);
+			login_password.setVisibility(View.INVISIBLE);
+			goToSignUpButt.setVisibility(View.INVISIBLE);
+		}
+		else{
+			SignUpButt.setVisibility(View.INVISIBLE);
+			signup_name.setVisibility(View.INVISIBLE);
+			signup_password.setVisibility(View.INVISIBLE);
+			goToLogin.setVisibility(View.INVISIBLE);
+		}
+		spinner.setVisibility(View.VISIBLE);
+	}
+	
+	void LoadingDone(){
+		if(loginphase){
+			LoginButt.setVisibility(View.VISIBLE);
+			login_name.setVisibility(View.VISIBLE);
+			login_password.setVisibility(View.VISIBLE);
+			goToSignUpButt.setVisibility(View.VISIBLE);
+		}
+		else{
+			SignUpButt.setVisibility(View.VISIBLE);
+			signup_name.setVisibility(View.VISIBLE);
+			signup_password.setVisibility(View.VISIBLE);
+			goToLogin.setVisibility(View.VISIBLE);
+		}
+		spinner.setVisibility(View.INVISIBLE);
+		fb_login_button.setVisibility(View.VISIBLE);
+	}
 	
 	public void feedback (String feedback) {
 		feedback1 = feedback;
@@ -427,16 +496,76 @@ public class Login extends Activity implements Observer, OnClickListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	class timer extends TimerTask{
+		Login login;
+		public timer(Login login) {
+			// TODO Auto-generated constructor stub
+			this.login = login;
+		}
+		@Override
+		public void run() {
+			login.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					login.shortWaitingDone();
+				}
+			});
+			
+		}	
+	}
+	
+	class timer2 extends TimerTask{
+		Login login;
+		public timer2(Login login) {
+			this.login = login;
+		}
+		@Override
+		public void run() {
+			login.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					login.LoadingDone();
+				}
+			});
+			
+		}	
+	}
 
+	void shortWaitingDone(){
+		if(loginphase){
+			LoginButt.setVisibility(View.VISIBLE);
+			login_name.setVisibility(View.VISIBLE);
+			login_password.setVisibility(View.VISIBLE);
+			goToSignUpButt.setVisibility(View.VISIBLE);
+		}
+		else{
+			SignUpButt.setVisibility(View.VISIBLE);
+			signup_name.setVisibility(View.VISIBLE);
+			signup_password.setVisibility(View.VISIBLE);
+			goToLogin.setVisibility(View.VISIBLE);
+		}
+		spinner.setVisibility(View.INVISIBLE);
+		fb_connect_button.setVisibility(View.VISIBLE);
+	}
+	
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		fb_helper.facebook_login(arg0, this);
-		try {
-			while(client.doneconnecttobinder(client, "FACEBOOK"));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(counter == 0){
+			this.Loading();
+			fb_connect_button.setVisibility(View.INVISIBLE);
+			fb_helper.facebook_login(arg0, this);
+			t.schedule(timertask, 1000);
+			counter++;
+		}else{
+			counter++;
+			this.Loading();
+			t2.schedule(timertask2, 2000);
+			fb_helper.facebook_login(arg0, this);
+			fb_connect_button.setVisibility(View.INVISIBLE);
 		}
+		//fb_login_button.setVisibility(View.VISIBLE);
 	}
 	  @Override
 	  public void onActivityResult(int requestCode, int resultCode, Intent data) {

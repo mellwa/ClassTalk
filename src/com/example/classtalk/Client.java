@@ -155,8 +155,9 @@ public class Client{
 				  
 				  Log.d("Client105105105" , sign_log);
 				  
-				  int length = personName.length();
+				  int length;
 				  if(!sign_log.equals("FACEBOOK")){
+					  length = personName.length();
 					  out_stream.writeInt(length);
 					  out_stream.writeBytes(personName);
 					  out_stream.writeInt(password.length());
@@ -257,13 +258,14 @@ public class Client{
 	  }
 	  
 	  boolean doneconnecttobinder(Client client , String sign_log) throws IOException{
-		  personName = model.getName();
-		  password = model.getPassword();
-
-		  Log.d("Client105105105" , "person name is " + personName);
-		  Log.d("Client105105105" , "password is " + password);
-		  Log.d("Client105105105" , "name length is " + personName.length());
-		  Log.d("Client105105105" , "password length is " + password.length());
+		  if(!sign_log.equals("FACEBOOK")){
+			  personName = model.getName();
+			  password = model.getPassword();
+			  Log.d("Client105105105" , "person name is " + personName);
+			  Log.d("Client105105105" , "password is " + password);
+			  Log.d("Client105105105" , "name length is " + personName.length());
+			  Log.d("Client105105105" , "password length is " + password.length());
+		  }
 		  
 		  
 		  new Thread(new ConnectToBinder(client, sign_log)).start();

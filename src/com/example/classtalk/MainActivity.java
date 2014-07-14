@@ -21,9 +21,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -58,6 +60,8 @@ public class MainActivity extends Activity implements Observer, LocationListener
 	Client client;
 	GoogleMap map;
 	Fragment google_map;
+	MainActivity mainac;
+	AlertDialog welcomeDialog;
 //	FragmentTransaction Fragmenttr;
 	
 	@Override
@@ -70,6 +74,7 @@ public class MainActivity extends Activity implements Observer, LocationListener
 		rl.setBackgroundResource(R.drawable.dc);
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 		//client = new Client("ubuntu1204-004.student.cs.uwaterloo.ca",33787,this);
+		mainac = this;
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
 			//do things on resume mode
@@ -127,9 +132,9 @@ public class MainActivity extends Activity implements Observer, LocationListener
             }
             locationManager.requestLocationUpdates(provider, 20000, 0, this);
             map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            LatLng newLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-    		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(newLatLng, 16);
-    		map.animateCamera(update);
+//            LatLng newLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+//    		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(newLatLng, 16);
+//    		map.animateCamera(update);
         }
 		
 		BuildingSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -172,6 +177,7 @@ public class MainActivity extends Activity implements Observer, LocationListener
 		//model = new Model();
 		model.addObserver(this);
 		model.initObservers();
+		this.welcome();
 	}
 	
 	@Override
@@ -221,6 +227,38 @@ public class MainActivity extends Activity implements Observer, LocationListener
 			model.setInvisible();
 		}
 		
+	}
+	
+	void welcome(){
+		mainac = this;
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						mainac);
+		 
+					// set title
+					alertDialogBuilder.setTitle("ClassTalk");
+		 
+					// set dialog message
+					alertDialogBuilder
+						.setMessage("Welcome to ClassTalk\n"+personName+"\nPlease select your room")
+						.setCancelable(false)
+						.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								// if this button is clicked, just close
+								// the dialog box and do nothing
+								dialog.cancel();
+							}
+						});
+		 
+						// create alert dialog
+						welcomeDialog = alertDialogBuilder.create();
+						welcomeDialog.show();
+			}
+		});
 	}
 	
 	@Override

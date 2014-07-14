@@ -14,6 +14,17 @@
         android:src="@drawable/login_button"
         android:visibility="visible"
          />
+    <ImageView
+        android:id="@+id/facebook_connect_button"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="71dp"
+        android:src="@drawable/connect_button"
+        android:visibility="visible"
+         />
+
 
     <EditText
         android:id="@+id/login_name"
@@ -93,5 +104,15 @@
         android:layout_above="@+id/signup_name"
         android:layout_alignParentRight="true"
         android:text="GoToSignUp" />
+
+    <ProgressBar
+        android:id="@+id/waittingSpinner"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signup_password"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@+id/goToSignUp" />
+
 
 </RelativeLayout>

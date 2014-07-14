@@ -23,6 +23,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="16dp"
         android:layout_toLeftOf="@+id/send"
+        android:hint="Text Message"
         android:ems="10" >
 
         <requestFocus />

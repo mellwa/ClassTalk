@@ -19,6 +19,7 @@ public class facebook_helper {
 	static Session activeSession;
 	static String id = null;
 	View view;
+	Login login;
 	String user_name = null;
 	public facebook_helper(String fb_id) {
 		// TODO Auto-generated constructor stub
@@ -27,6 +28,7 @@ public class facebook_helper {
 	}
 	void facebook_login(View v, Login login){
 		view = v;
+		this.login = login;
 		if(activeSession != null && activeSession.isOpened()){
 			Request.newMeRequest(activeSession, new Request.GraphUserCallback(){
 				@Override
@@ -52,7 +54,7 @@ public class facebook_helper {
 	            }
 	        };
 	        activeSession.openForRead(new Session.OpenRequest(login).setCallback(callback));
-	        //facebook_login(view, login);
+	        //this.facebook_login(v, login);
 		}
 	}
 	
@@ -66,11 +68,19 @@ public class facebook_helper {
 	}
 	
 	String getUserName(){
-		if(this.user_name != null){
-			return user_name;
+		if(this.user_name == null){
+			Request.newMeRequest(activeSession, new Request.GraphUserCallback(){
+				@Override
+				public void onCompleted(GraphUser user, Response response) {
+					// TODO Auto-generated method stub
+					//if(user != null)
+					user_name = user.getName();
+					Log.d("user name",user_name);
+				}
+	        }).executeAsync();
 		}
 		Log.d("facebook user name","is null");
-		return null;
+		return user_name;
 	}
 
 }

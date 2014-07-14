@@ -34,6 +34,7 @@ public class Chat extends LinearLayout implements Observer{
 	PrintWriter out;
 	String received_message;
 	Talk talk;
+	Chat chatt;
 	int sendBuilding = 1;
 	Socket clientSocket = null;
 	BufferedReader inputBuffer = null;
@@ -47,7 +48,7 @@ public class Chat extends LinearLayout implements Observer{
 		model.addObserver(this);
 		
 
-		
+		chatt = this;
 		View.inflate(context, R.layout.activity_chat, this);
 		
 		Log.d("Chat" , " get into chat" );
@@ -55,14 +56,29 @@ public class Chat extends LinearLayout implements Observer{
 		chat = (TextView) findViewById(R.id.textView1);	
 		scroll = (ScrollView) findViewById(R.id.scrollView1);
 		input = (EditText) findViewById(R.id.input);
+		input.setBackground(getResources().getDrawable(R.drawable.login_rec));
 		send = (Button) findViewById(R.id.send);
 		
 		input.addTextChangedListener( new TextWatcher(){
 
 			@Override
 			public void afterTextChanged(Editable arg0) {
+				inputString = "";
 				inputString = input.getText().toString();
 				Log.d("MainActivity" , "Building "+inputString);
+				
+				int l = 0;
+				char lastChar;
+				if(inputString != null){
+					l = inputString.length()-1;
+				}
+				if(l>0){ 
+					lastChar = inputString.charAt(l);
+					if(lastChar == '\n'){
+						inputString = inputString.substring(0, l);
+						chatt.sendMessage();
+					}
+				}
 			}
 
 			@Override
@@ -74,26 +90,34 @@ public class Chat extends LinearLayout implements Observer{
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2,
 					int arg3) {
-				
+//				inputString = input.getText().toString();
+
 			}
 			
 		});
 	
 		send.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String name = model.getName();
-				if (sendBuilding == 1) {
-					//String BuildRoom = model.GetBuilding() + model.GetRoom();
-					
-					sendBuilding = 0;
-				}
-				if(out != null){
-					out.write(name +":"+ inputString);
-					out.flush();
-				}
-				model.setBuffer(name + ":"+ inputString);
-				model.initObservers();
-				input.setText("");
+//				String name = model.getName();
+//				if (sendBuilding == 1) {
+//					//String BuildRoom = model.GetBuilding() + model.GetRoom();
+//					
+//					sendBuilding = 0;
+//				}
+//				if(out != null){
+//					out.write(name +":"+ inputString);
+//					out.flush();
+//				}
+//				
+//				if((inputString.equals(""))||(inputString.equals(" ")) || (inputString.equals("	"))){
+//					talk.emptyText();
+//				}
+//				else{
+//					model.setBuffer(name + ":"+ inputString);
+//					model.initObservers();
+//					input.setText("");
+//				}
+				chatt.sendMessage();
 			}
 		});
 		Log.d("Chat" , " here chat" );
@@ -124,6 +148,28 @@ public class Chat extends LinearLayout implements Observer{
 
 	public void receivedMessage(String s){
 		received_message = s;
+	}
+	
+	void sendMessage(){
+		String name = model.getName();
+		if (sendBuilding == 1) {
+			//String BuildRoom = model.GetBuilding() + model.GetRoom();
+			
+			sendBuilding = 0;
+		}
+		
+		if((inputString.equals(""))||(inputString.equals(" ")) || (inputString.equals("	"))){
+			talk.emptyText();
+		}
+		else{
+			if(out != null){
+				out.write(name +":"+ inputString);
+				out.flush();
+			}
+			model.setBuffer(name + ":"+ inputString);
+			model.initObservers();
+			input.setText("");
+		}
 	}
 	@Override
 	public synchronized void update(Observable arg0, Object arg1) {
