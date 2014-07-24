@@ -1,7 +1,9 @@
-package com.example.classtalk;
+package com.chao.classtalk;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import com.chao.classtalk.R;
 
 import android.content.Context;
 import android.util.Log;

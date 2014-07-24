@@ -1,4 +1,4 @@
-package com.example.classtalk;
+package com.chao.classtalk;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,6 +10,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Observable;
 import java.util.Observer;
+
+import com.chao.classtalk.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

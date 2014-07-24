@@ -1,8 +1,10 @@
-package com.example.classtalk;
+package com.chao.classtalk;
 
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+
+import com.chao.classtalk.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;

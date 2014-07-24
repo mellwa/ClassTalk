@@ -1,5 +1,11 @@
-package com.example.classtalk;
+package com.chao.classtalk;
 
+import java.security.MessageDigest;
+
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
@@ -55,6 +61,7 @@ public class facebook_helper {
 	        };
 	        activeSession.openForRead(new Session.OpenRequest(login).setCallback(callback));
 	        //this.facebook_login(v, login);
+	        
 		}
 	}
 	

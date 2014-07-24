@@ -1,4 +1,4 @@
-package com.example.classtalk;
+package com.chao.classtalk;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
-package com.example.classtalk;
+package com.chao.classtalk;
 
+
+import com.chao.classtalk.R;
 
 import android.os.Bundle;
 import android.os.Handler;

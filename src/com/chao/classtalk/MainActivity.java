@@ -1,10 +1,11 @@
-package com.example.classtalk;
+package com.chao.classtalk;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.chao.classtalk.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,6 +49,7 @@ public class MainActivity extends Activity implements Observer, LocationListener
 	Spinner BuildingSpinner;
 	Spinner RoomSpinner;
 	Button EnterButt;
+	Button Logout;
 	String inputBuilding;
 	String inputRoom;
 	Model model;
@@ -94,6 +96,7 @@ public class MainActivity extends Activity implements Observer, LocationListener
 		BuildingSpinner = (Spinner) findViewById(R.id.Building_Spinner);
 		RoomSpinner = (Spinner) findViewById(R.id.Room_Spinner);
 		EnterButt = (Button) findViewById(R.id.Enter_Button);
+		Logout = (Button) findViewById(R.id.logout_button);
 		google_map = (Fragment) getFragmentManager().findFragmentById(R.id.map);
 //		Fragmenttr = getFragmentManager().beginTransaction();
 		
@@ -108,6 +111,14 @@ public class MainActivity extends Activity implements Observer, LocationListener
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Start(arg0);
+			}
+		});
+		
+		Logout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				logout();
 			}
 		});
 		
@@ -183,7 +194,7 @@ public class MainActivity extends Activity implements Observer, LocationListener
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		//super.onBackPressed();
+		super.onBackPressed();
 	}
 	public void Start(View v) {
 		Intent intent = new Intent(this, Talk.class);
@@ -193,6 +204,13 @@ public class MainActivity extends Activity implements Observer, LocationListener
 		intent.putExtra("PersonName", personName);
 		Log.d("MainActivity!!!!!!!!!!!!!" , inputBuilding + inputRoom);
 		startActivity(intent);
+	}
+	
+	public void logout(){
+//		Intent intent = new Intent(this, Login.class);
+//		startActivity(intent);
+		finish();
+		onBackPressed();
 	}
 
 	public void Exit(View v) {

@@ -1,4 +1,4 @@
-package com.example.classtalk;
+package com.chao.classtalk;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -41,7 +41,8 @@ public class Client{
 	  boolean doneBinder = false;
 	  boolean hostget = false;
 	  boolean portget = false;
-	  
+	  boolean login_fail = false;
+	  boolean signup_fail = false;
 	  
 	  Client(String addr, int port, Model m,  Login login) throws UnknownHostException, IOException{
 		  dstAddress = addr;
@@ -146,7 +147,7 @@ public class Client{
 				client.clientSocket = new Socket(dstAddress,dstPort);
 				if(client.clientSocket == null){
 					Log.d("Socket","creation failed");
-					System.exit(-1);
+					doneBinder = true;
 				}
 				DataOutputStream out_stream = new DataOutputStream(client.clientSocket.getOutputStream());
 				  
@@ -168,11 +169,12 @@ public class Client{
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
 				Log.d("from server","auiwhduidhauiwd we are catched");
+				doneBinder = true;
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				Log.d("from server","iudahwdiuwhdi we are catched");
-
+				doneBinder = true;
 			}
 
 			  while(!doneBinder){
@@ -192,25 +194,31 @@ public class Client{
 							Log.d("Client:105", "faileuresrlssf dsala!");
 							if(sign_log.equals("SIGN_UPP")){
 								login.feedback("F_Signup");
+								signup_fail = true;
 							}else{
 								login.feedback("F");
+								login_fail = true;
 							}
+							done = true;
 							break;
 						}
 						else if(success.equals("N")) {
 							login.feedback("N");
+							done = true;
 							break;
 						}
 						else if(success.equals("S")) {
 							if(sign_log.equals("SIGN_UPP")){
 								//dialog
+								signup_fail = false;
 								login.signupSuccessfull();
+								done = true;
 								break;
 							}
 							while(true){
+								login_fail = false;
 								int building;
 								String room = null;
-								
 								byte[] buffer2 = new byte[1];
 								is.read(buffer2);
 								//success = inputs.readLine();
@@ -250,6 +258,7 @@ public class Client{
 				
 				}
 			  try {
+				  if(client.clientSocket != null)
 				client.clientSocket.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -263,13 +272,18 @@ public class Client{
 			  password = model.getPassword();
 			  Log.d("Client105105105" , "person name is " + personName);
 			  Log.d("Client105105105" , "password is " + password);
-			  Log.d("Client105105105" , "name length is " + personName.length());
-			  Log.d("Client105105105" , "password length is " + password.length());
+			  //Log.d("Client105105105" , "name length is " + personName.length());
+			  //Log.d("Client105105105" , "password length is " + password.length());
 		  }
-		  
-		  
+		  done = false;
+		  doneBinder = false;
 		  new Thread(new ConnectToBinder(client, sign_log)).start();
+		  //while(!doneBinder){Log.d("waiting for connecttion","binder no response yet");}
 		return done;  
+	  }
+	  
+	  boolean isConnectionToBinderDone(){
+		  return done;
 	  }
 	  
 	  void requestServerInfo(){
@@ -330,7 +344,19 @@ public class Client{
 		  
 	  }
 	  
-
+	  boolean loginFailed(){
+		  return login_fail;
+	  }
+	  
+	  boolean signupFailed(){
+		  return signup_fail;
+	  }
+	  
+	  void closeBinderSocket() throws IOException{
+		  if(clientSocket !=null && clientSocket.isConnected()){
+			  clientSocket.close();
+		  }
+	  }
 
 
 	public PrintWriter getPrintWriter(){
